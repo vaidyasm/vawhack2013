@@ -13,10 +13,11 @@
     
     // $directory = "nfsshare/audiofiles/" //directory from where to read file
     $directory = realpath("/nfsshare/audiofiles");
-    var_dump($directory);
+
     // get all text files with a .txt extension.
-    $texts = glob($directory . "*.txt");
     
+    $texts = glob($directory . "/*.txt");
+    var_dump($texts);
     if(empty($texts)){
         echo "File not present";
         return;
