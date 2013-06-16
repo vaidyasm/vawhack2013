@@ -1,4 +1,14 @@
 <?php
+    $host = "localhost";
+    $user_name = "root";
+    $password = "";
+    $database_name = "vawhack";
+    $db = mysql_connect($host, $user_name, $password);
+    if (mysql_error() > ""){ 
+        print_r(mysql_error());
+    }
+    mysql_select_db($database_name, $db);
+    
     // $directory = "nfsshare/audiofiles/" //directory from where to read file
     $directory = "C:/Users/sus/Desktop/voicemail/device/999/INBOX/";
     // get all text files with a .txt extension.
@@ -25,6 +35,9 @@
             }
         }
         fclose($file);
+        $query = "INSERT INTO vmf(afn, callerid, calltime) values ('".$my_array['filename']."','".$my_array['caller_id']."','".$my_array['origtime']."')";
+        print_r($query);
+        $qresult = mysql_query($query);
         print_r($my_array);
     }
     
