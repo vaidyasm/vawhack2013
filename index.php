@@ -6,6 +6,9 @@
         #main{
             margin-top: 60px;
         }
+        #information_input_form{
+            margin-top: 20px;
+        }
      </style>
 </head>
 <body>
@@ -29,9 +32,9 @@
     <div id="main" class="container">
         <?php 
         if(isset($_GET["page"]))
-            include_once('app/pages/'.$_GET["page"]);
+            require_once('app/pages/'.$_GET['page'].".php");
         else
-            include_once('app/pages/home.php');
+            require_once('app/pages/home.php');
         ?>
     </div>
     <div id="footer">
