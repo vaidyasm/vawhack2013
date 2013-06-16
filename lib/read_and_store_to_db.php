@@ -1,16 +1,19 @@
 <?php
-    $host = "localhost";
-    $user_name = "root";
-    $password = "";
-    $database_name = "vawhack";
-    $db = mysql_connect($host, $user_name, $password);
-    if (mysql_error() > ""){ 
-        print_r(mysql_error());
-    }
-    mysql_select_db($database_name, $db);
+//    $host = "localhost";
+//    $user_name = "root";
+//    $password = "";
+//    $database_name = "vawhack";
+//    $db = mysql_connect($host, $user_name, $password);
+//    if (mysql_error() > ""){ 
+//        print_r(mysql_error());
+//    }
+//    mysql_select_db($database_name, $db);
+
+    require_once('../source_functions.php');
     
     // $directory = "nfsshare/audiofiles/" //directory from where to read file
-    $directory = "C:/Users/sus/Desktop/voicemail/device/999/INBOX/";
+    $directory = realpath("/nfsshare/audiofiles");
+    var_dump($directory);
     // get all text files with a .txt extension.
     $texts = glob($directory . "*.txt");
     
@@ -27,6 +30,7 @@
             $each_line = explode("=", $current_line);
             if($each_line[0] == "callerid"){
                 $reg = '/<([0-9]+)>$/';
+                $matches = array();
                 preg_match($reg, $each_line[1], $matches);
                 $my_array['caller_id'] = $matches[1];
             }
@@ -35,10 +39,12 @@
             }
         }
         fclose($file);
-        $query = "INSERT INTO vmf(afn, callerid, calltime) values ('".$my_array['filename']."','".$my_array['caller_id']."','".$my_array['origtime']."')";
-        print_r($query);
-        $qresult = mysql_query($query);
-        print_r($my_array);
+//        $query = "INSERT INTO vmf(afn, callerid, calltime) values ('".$my_array['filename']."','".$my_array['caller_id']."','".$my_array['origtime']."')";
+//        print_r($query);
+//        $qresult = mysql_query($query);
+//        print_r($my_array);
+        $save_res = saveVmf($my_array['filename'], $my_array['caller_id'], $my_array['origtime']);
+        var_dump($save_res);
     }
     
 
