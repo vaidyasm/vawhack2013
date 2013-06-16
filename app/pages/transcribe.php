@@ -10,11 +10,12 @@
 <audio src ="<?php echo $path; ?>" controls></audio>
 <br />
 <div id="information_input_form">
-    <form action="../fill_up_form.php" method="post">
+    <form action="http://vawhackdevel.com?page=fill_up_form" method="post">
         Name: <input type="text" name="name"><br />
         Address: <input type="text" name="address"><br />
         Language: <input type="text" name="language"><br />
         Information: <textarea name="information"></textarea>
+        <input type="hidden" name="audio_id" value="<?= $audio_id ?>">
         <input type="submit" name="submit" value="Submit">
     </form>
 </div>
