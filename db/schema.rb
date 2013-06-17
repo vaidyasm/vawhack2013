@@ -11,13 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130617060218) do
+ActiveRecord::Schema.define(:version => 20130617104646) do
+
+  create_table "categories", :force => true do |t|
+    t.integer  "parent"
+    t.string   "title"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "categories_transcribes", :id => false, :force => true do |t|
+    t.integer "category_id",   :null => false
+    t.integer "transcribe_id", :null => false
+  end
 
   create_table "transcribes", :force => true do |t|
     t.string   "caller_name"
     t.string   "caller_location"
     t.string   "language"
     t.text     "transcription_text"
+    t.integer  "voice_mail_info_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
@@ -43,8 +57,8 @@ ActiveRecord::Schema.define(:version => 20130617060218) do
 
   create_table "voice_mail_infos", :force => true do |t|
     t.string   "filename"
-    t.integer  "caller_id"
-    t.integer  "calltime"
+    t.integer  "callerid"
+    t.datetime "origdate"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

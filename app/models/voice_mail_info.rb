@@ -1,3 +1,4 @@
 class VoiceMailInfo < ActiveRecord::Base
-  attr_accessible :caller_id, :calltime, :filename
+  attr_accessible :callerid, :origdate, :filename
+  belongs_to :transcribe
 end

@@ -5,6 +5,7 @@ class CreateTranscribes < ActiveRecord::Migration
       t.string :caller_location
       t.string :language
       t.text :transcription_text
+      t.integer :voice_mail_info_id
 
       t.timestamps
     end

@@ -1,6 +1,8 @@
 Vawhack::Application.routes.draw do
   devise_for :users
-
+  resources :voice_mail_infos
+  resources :transcribes
+  resources :categories
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -51,7 +53,7 @@ Vawhack::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  root :to => 'home#index'
+  root :to => 'voice_mail_infos#index'
 
   # See how all your routes lay out with "rake routes"
 
