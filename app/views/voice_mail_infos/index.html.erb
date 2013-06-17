@@ -1,5 +1,15 @@
-<ul>
-<% @audios.each do |audio| %>
-  <li><%= link_to audio.filename, voice_mail_info_path(audio) %></li>  
-<% end %>
-</ul>
+<div class="leftbar">
+  <h1>Voicemails</h1>
+  <div class="inner">
+    <ul>
+      <% @audios.each do |audio| %>
+        <li>
+          <div>
+            Filename: <%= link_to audio.filename, voice_mail_info_path(audio) %>
+            Contact Date: <%= audio.origdate.in_time_zone("Kathmandu") %>
+          </div>
+        </li>  
+      <% end %>
+    </ul>
+  </div>
+</div>

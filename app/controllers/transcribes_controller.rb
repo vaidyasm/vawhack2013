@@ -4,9 +4,9 @@ class TranscribesController < ApplicationController
   def create
     @transcribe = Transcribe.new(params[:transcribe])
     if @transcribe.save
-      redirect_to :show, :notice => "The transcription process has been created"
+      render :show, :notice => "The transcription process has been created"
     else
-      redirect_to :back, :notice => "Unable to save the data"
+      render :back, :notice => "Unable to save the data"
     end
   end
 

@@ -1,0 +1,25 @@
+<div id="sign_in_body">
+  <div class="logo" align="center">
+    <span class="you_voice"><h1>Your Voice</h1></span>
+      <span class="our_support"><h1>Our Support</h1></span>
+
+      <div class="raising_voice">
+        <span>Raising Voice against VAW</span><br />
+      </div>
+      <div class="sign_in_form">
+          <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+            <div><%= f.label :email %><br />
+            <%= f.email_field :email, :autofocus => true %></div>
+
+            <div><%= f.label :password %><br />
+            <%= f.password_field :password %></div>
+
+            <% if devise_mapping.rememberable? -%>
+              <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+            <% end -%>
+
+            <div><%= f.submit "Sign in", :class=>"lets_support" %></div>
+          <% end %>
+      </div>
+  </div>
+</div>

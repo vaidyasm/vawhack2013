@@ -7,9 +7,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<header>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+</header>
+<%- if user_signed_in? %>
+<div class="rightbar">
+  <nav>
+    <li><%= link_to('Sign Out', destroy_user_session_path, :method => :delete) %></li>
+    <li><a href="#">Transcriptions</a></li>
+    <li class="active"><a href="#">Voicemails</a></li>
+    <li><a href="#">Home</a></li>
+    <div class="clear"></div>
+  </nav>
+</div>
+
+<% end %>  
 
 <%= yield %>
 
