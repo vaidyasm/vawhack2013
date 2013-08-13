@@ -1,0 +1,19 @@
+<%= audio_tag(@audio_path, :controls => true, :autoplay => false) %></audio>
+<%= form_for @transcribe do |f| %>
+    <%= f.hidden_field :voice_mail_info_id, :value => params[:id] %>
+    <%= f.label :caller_name %>:
+    <%= f.text_field :caller_name %><br />
+
+    <%= f.label :caller_location %>:
+    <%= f.text_field :caller_location %><br />
+
+    <%= f.label :language %>:
+    <%= f.text_field :language %><br />
+
+    <%= f.label :transcription_text %>:
+    <%= f.text_area :transcription_text %><br />
+
+    <%= f.label :categories %>:
+    <%= f.select :category_ids, Category.all.collect {|c| [c.title, c.id] }, {},{:multiple => true} %><br />
+    <%= f.submit %>
+  <% end %>

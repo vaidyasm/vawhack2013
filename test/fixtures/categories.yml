@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  parent: 1
+  title: MyString
+  description: MyString
+  transcribe: 
+
+two:
+  parent: 1
+  title: MyString
+  description: MyString
+  transcribe: 
