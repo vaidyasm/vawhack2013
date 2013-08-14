@@ -2,9 +2,11 @@
 
 class GreetingController extends Controller
 {
+	public $message = "Hello World!!!";
+	
 	public function actionIndex()
 	{
-		$this->render('index');
+		$this->render('index', array('content' => $this->message));
 	}
 
 	// Uncomment the following methods and override them if needed
