@@ -51,10 +51,10 @@ return array(
 		),*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=<database>',
+			'connectionString' => 'mysql:host=localhost;dbname=yii_user_module',
 			'emulatePrepare' => true,
-			'username' => '<username>',
-			'password' => '<password>',
+			'username' => 'yii_user_module',
+			'password' => 'vawhack2013',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
