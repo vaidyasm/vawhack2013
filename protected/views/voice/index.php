@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+/* @var $this UsersController */
+/* @var $dataProvider CActiveDataProvider */
+
+//$this->layout = 'protected/views/layouts/main_bootstrap.php';
+//$this->layout = 'main_bootstrap.php';
+
+//$this->breadcrumbs=array(
+//	'Voice',
+//);
+?>
 <head>
 <meta charset="utf-8">
 <title>Voicemails - Your Voice, Our Support</title>
@@ -173,12 +184,12 @@ html,body {
 </style>
 <link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements 
+[if lt IE 9]>
       <script src="/assets/js/html5shiv.js"></script>
     <![endif]-->
 
-<!-- Fav and touch icons -->
+ <!--Fav and touch icons--> 
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
 	href="/assets/ico/apple-touch-icon-144-precomposed.png"></link>
 <link rel="apple-touch-icon-precomposed" sizes="114x114"
@@ -205,7 +216,7 @@ html,body {
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<!--                 <li class="active"><a href="#">Home</a></li> -->
+							                 <!--<li class="active"><a href="#">Home</a></li>--> 
 							<li><a href="#">Home</a></li>
 							<li class="active"><a href="/voicemails2.html">Transcriptions</a></li>
 							<li><a href="/voicemail_followups2.html">FollowUps</a></li>
@@ -242,8 +253,8 @@ html,body {
 	<!-- Le javascript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="/assets/jQuery/jquery-2.0.3.min.js"></script>
-	<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<!--	<script src="/assets/jQuery/jquery-2.0.3.min.js"></script>
+	<script src="/assets/bootstrap/js/bootstrap.min.js"></script>-->
 	<!--     <script src="/assets/js/bootstrap-transition.js"></script> -->
 	<!--     <script src="/assets/js/bootstrap-alert.js"></script> -->
 	<!--     <script src="/assets/js/bootstrap-modal.js"></script> -->
@@ -258,19 +269,7 @@ html,body {
 	<!--     <script src="/assets/js/bootstrap-typeahead.js"></script> -->
 
 
-	<script type="text/javascript" language="javascript"
-		src="/module_voicemails/module_voicemails.nocache.js"></script>
+<!--	<script type="text/javascript" language="javascript"
+		src="/module_voicemails/module_voicemails.nocache.js"></script>-->
 </body>
 </html>
-<!--
-<?php
-/* @var $this UsersController */
-/* @var $dataProvider CActiveDataProvider */
-
-$this->breadcrumbs=array(
-	'Voice',
-);
-?>
-<h1>Voice</h1>
-This is a voice index page.
--->

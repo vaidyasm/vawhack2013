@@ -28,6 +28,7 @@ class VoiceController extends Controller
 
 	public function actionIndex()
 	{
-		$this->render('index');
+//		$this->render('index');
+                $this->renderPartial('index');
 	}
 }
