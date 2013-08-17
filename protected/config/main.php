@@ -18,14 +18,19 @@ return array(
 		'application.models.*',
 		'application.components.*',
 	),
+    
+        //'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
 
-	'modules'=>array(
+        'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'vawhack2013',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+//                        'generatorPaths'=>array(
+//                            'bootstrap.gii',
+//                        ),
 		),
 	),
 
@@ -70,14 +75,17 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				//array(
-				//	'class'=>'CWebLogRoute',
-				//),
+				array(
+					'class'=>'CWebLogRoute',
+				),
 			),
 		),
 		'user' => array(
 			'class' => 'WebUser',
 		),
+//                'bootstrap'=>array(
+//                    'class'=>'bootstrap.components.Bootstrap',
+//                ),
 	),
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
