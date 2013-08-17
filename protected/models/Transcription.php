@@ -11,6 +11,9 @@
  * @property string $callerLoc
  * @property string $lang
  * @property string $text
+ *
+ * The followings are the available model relations:
+ * @property Voicemail $voicemail
  */
 class Transcription extends CActiveRecord
 {
@@ -46,6 +49,7 @@ class Transcription extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'voicemail' => array(self::BELONGS_TO, 'Voicemail', 'voicemailId'),
 		);
 	}
 
@@ -56,7 +60,7 @@ class Transcription extends CActiveRecord
 	{
 		return array(
 			'id' => 'Primary Key.',
-			'voicemailId' => 'Foreign key: voicemail.id. Indicates the voicemail which this transcription is for.',
+			'voicemailId' => 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Transcription is for.',
 			'userId' => 'Foreign key: users.id. Indicates the user who created this transcription.',
 			'callerName' => 'Full name of the caller. Transcribed by the user.',
 			'callerLoc' => 'Location of the caller. Transcribed by user.',

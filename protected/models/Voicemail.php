@@ -8,6 +8,11 @@
  * @property string $callTime
  * @property string $callerId
  * @property string $vmFileName
+ *
+ * The followings are the available model relations:
+ * @property Followup[] $followups
+ * @property Transcription[] $transcriptions
+ * @property Voicemailcategory[] $voicemailcategories
  */
 class Voicemail extends CActiveRecord
 {
@@ -43,6 +48,9 @@ class Voicemail extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'followups' => array(self::HAS_MANY, 'Followup', 'voicemailId'),
+			'transcriptions' => array(self::HAS_MANY, 'Transcription', 'voicemailId'),
+			'voicemailcategories' => array(self::HAS_MANY, 'Voicemailcategory', 'voicemailId'),
 		);
 	}
 
@@ -54,7 +62,7 @@ class Voicemail extends CActiveRecord
 		return array(
 			'id' => 'Primary Key.',
 			'callTime' => 'Voicemail received at this timestamp.',
-			'callerId' => "Caller's phone number.",
+			'callerId' => 'Phone number of the caller.',
 			'vmFileName' => 'File name on voice-mail file server.',
 		);
 	}

@@ -1,25 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "followup".
+ * This is the model class for table "voicemailcategory".
  *
- * The followings are the available columns in table 'followup':
+ * The followings are the available columns in table 'voicemailcategory':
  * @property integer $id
  * @property integer $voicemailId
- * @property integer $userId
- * @property string $text
+ * @property integer $categoryTypeId
  *
  * The followings are the available model relations:
  * @property Voicemail $voicemail
+ * @property CategoryType $categoryType
  */
-class Followup extends CActiveRecord
+class Voicemailcategory extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'followup';
+		return 'voicemailcategory';
 	}
 
 	/**
@@ -30,11 +30,11 @@ class Followup extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('voicemailId, userId, text', 'required'),
-			array('voicemailId, userId', 'numerical', 'integerOnly'=>true),
+			array('voicemailId, categoryTypeId', 'required'),
+			array('voicemailId, categoryTypeId', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, voicemailId, userId, text', 'safe', 'on'=>'search'),
+			array('id, voicemailId, categoryTypeId', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,6 +47,7 @@ class Followup extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'voicemail' => array(self::BELONGS_TO, 'Voicemail', 'voicemailId'),
+			'categoryType' => array(self::BELONGS_TO, 'CategoryType', 'categoryTypeId'),
 		);
 	}
 
@@ -56,10 +57,9 @@ class Followup extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'Primary key.',
-			'voicemailId' => 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Followup message is for.',
-			'userId' => 'Foreign key: users.id. Indicates the user who created this follow up.',
-			'text' => 'Follow up notes.',
+			'id' => 'Primary Key.',
+			'voicemailId' => 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id)',
+			'categoryTypeId' => 'CONSTRAINT FOREIGN KEY (categoryTypeId) REFERENCES CategoryType(id)',
 		);
 	}
 
@@ -83,8 +83,7 @@ class Followup extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('voicemailId',$this->voicemailId);
-		$criteria->compare('userId',$this->userId);
-		$criteria->compare('text',$this->text,true);
+		$criteria->compare('categoryTypeId',$this->categoryTypeId);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -95,7 +94,7 @@ class Followup extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Followup the static model class
+	 * @return Voicemailcategory the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
