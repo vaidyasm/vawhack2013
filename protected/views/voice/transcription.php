@@ -247,27 +247,18 @@ html,body {
                                     ?>
                                     <!--</table>-->
 <?php
-    echo "<pre>Selected Voicemail:</pre>";
-//    echo var_dump($voicemail);
-    echo "<pre>Voicemail: {id: " . $voicemail->id . ", callTime: " . $voicemail->callTime . ", callerId: " . $voicemail->callerId . "}</pre>";
-    echo "<pre>Associated Transcription[]:</pre>";
-    //echo var_dump($voicemail->transcriptions);
-    //echo "<pre>Voicemail: {id: " . $voicemail->id . ", callTime: " . $voicemail->callTime . ", callerId: " . $voicemail->callerId . "}</pre>";
-?>
-<?php
-                                        foreach ($voicemail->transcriptions as $transcription)
-                                        {
-                                            echo '<pre>'.
-                                                    '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/transcription/' . $transcription->id . '">' . 
-                                                    '{ id: ' . $transcription->id . 
-                                                    ', voicemailId: ' . $transcription->voicemailId . 
-                                                    ', userId: ' . $transcription->userId . 
-                                                    ', callerName: ' . $transcription->callerName . 
-                                                    ', callerLoc: ' . $transcription->callerLoc . 
-                                                    ', lang: ' . $transcription->lang . 
-                                                    ', text: ' . $transcription->text . '}' .                                                    
-                                                    '</a></pre>';
-                                        }
+    echo "<pre>Selected Transcription:</pre>";
+    echo '<pre>'.
+//        '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/transcription/' . $transcription->id . '">' . 
+        '{ id: ' . $transcription->id . 
+        ', voicemailId: ' . $transcription->voicemailId . 
+        ', userId: ' . $transcription->userId . 
+        ', callerName: ' . $transcription->callerName . 
+        ', callerLoc: ' . $transcription->callerLoc . 
+        ', lang: ' . $transcription->lang . 
+        ', text: ' . $transcription->text . '}' .                                                    
+//        '</a>'.
+        '</pre>';
 ?>
                                 </div>
 			</div>

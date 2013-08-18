@@ -16,7 +16,7 @@ class VoiceController extends Controller
 	{
 		return array(
 			array('allow',  // allow users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'voicemail'),
+				'actions'=>array('index', 'voicemail', 'transcription'),
 				//'users'=>array('admin','voice'),
 				'roles'=> array('admin','voice')
 			),
@@ -43,5 +43,12 @@ class VoiceController extends Controller
             //$voicemail = Voicemail::model()->with('transcription')->findByPk((int)$id);
             $voicemail = Voicemail::model()->findByPk((int)$id);
             $this->renderPartial('voicemail', $data = array('voicemail' => $voicemail));
+	}
+        
+        public function actionTranscription()
+	{
+            $id = $_GET['id'];
+            $transcription = Transcription::model()->findByPk((int)$id);
+            $this->renderPartial('transcription', $data = array('transcription' => $transcription));
 	}
 }
