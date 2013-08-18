@@ -210,13 +210,13 @@ html,body {
 	</noscript>
 	<div class="container" id="wrap">
 
-		<div class="masthead">
+<!--		<div class="masthead">
 			<h3 class="muted">Your Voice, Our Support</h3>
 			<div class="navbar">
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							                 <!--<li class="active"><a href="#">Home</a></li>--> 
+							                 <li class="active"><a href="#">Home</a></li> 
 							<li><a href="#">Home</a></li>
 							<li class="active"><a href="/voicemails2.html">Transcriptions</a></li>
 							<li><a href="/voicemail_followups2.html">FollowUps</a></li>
@@ -226,8 +226,8 @@ html,body {
 					</div>
 				</div>
 			</div>
-			<!-- /.navbar -->
-		</div>
+			 /.navbar 
+		</div>-->
 <!-- 		<hr> -->
 		<div id="divWorkspace" class="row-fluid Height400px">
 			<div id="divColWest" class="span4">
@@ -235,7 +235,39 @@ html,body {
 					<div id="divContainerVoicemailsListHeader"></div>
 					<div id="divContainerRefreshVoicemailsButton"></div>
 				</div>
-				<div id="divContainerVoicemailsList"></div>
+				<div id="divContainerVoicemailsList">
+                                    <table>
+                                    <?php
+                                        foreach ($voicemails as $voicemail)
+                                        {
+                                            ?><tr><td><?php
+                                            echo $voicemail->callTime . ', ' . $voicemail->callerId;
+                                            ?></td></tr><?php
+                                        }
+                                    ?>
+                                    </table>
+<?php
+//                                            $this->widget('zii.widgets.grid.CGridView', array(
+//    'dataProvider'=>$voicemails,
+//    'columns'=>array(
+////        'title',          // display the 'title' attribute
+////        'category.name',  // display the 'name' attribute of the 'category' relation
+////        'content:html',   // display the 'content' attribute as purified HTML
+////        array(            // display 'create_time' using an expression
+////            'name'=>'callTime',
+////            'value'=>'date("M j, Y", $data->callTime)',
+////        ),
+////        array(            // display 'author.username' using an expression
+////            'name'=>'callerId',
+////            'value'=>'$data->callerId',
+////        ),
+////            array(            // display a column with "view", "update" and "delete" buttons
+////                'class'=>'CButtonColumn',
+////            ),
+//    ),
+//));
+?>
+                                </div>
 			</div>
 			<!-- <div id="divContainerVoicemailTranscriptions" class="span8" style="min-height: 400px; height: 100%;"></div> -->
 			<div id="divVoicemailRelated" class="span8 Height400px Width100pc"></div>

@@ -22,13 +22,18 @@ class VoiceController extends Controller
 			),
 			array('deny',
 				'roles' => array('sms','org','news','katha')
-			)
+			),
+                        array('deny',  // deny all users
+                            'users'=>array('*'),
+                        ),
 		);
 	}
 
 	public function actionIndex()
 	{
 //		$this->render('index');
-                $this->renderPartial('index');
+            
+            $voicemails = Voicemail::model()->findAll();
+            $this->renderPartial('index', $data = array('voicemails' => $voicemails));
 	}
 }
