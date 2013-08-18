@@ -16,7 +16,7 @@ class VoiceController extends Controller
 	{
 		return array(
 			array('allow',  // allow users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'voicemail', 'transcription'),
+				'actions'=>array('index', 'voicemail', 'transcription', 'addTranscription'),
 				//'users'=>array('admin','voice'),
 				'roles'=> array('admin','voice')
 			),
@@ -34,7 +34,7 @@ class VoiceController extends Controller
 //		$this->render('index');
             
             $voicemails = Voicemail::model()->findAll();
-            $this->renderPartial('index', $data = array('voicemails' => $voicemails));
+            $this->render('index', $data = array('voicemails' => $voicemails));
 	}
         
         public function actionVoicemail()
@@ -42,13 +42,21 @@ class VoiceController extends Controller
             $id = $_GET['id'];
             //$voicemail = Voicemail::model()->with('transcription')->findByPk((int)$id);
             $voicemail = Voicemail::model()->findByPk((int)$id);
-            $this->renderPartial('voicemail', $data = array('voicemail' => $voicemail));
+            $this->render('voicemail', $data = array('voicemail' => $voicemail));
 	}
         
         public function actionTranscription()
 	{
             $id = $_GET['id'];
             $transcription = Transcription::model()->findByPk((int)$id);
-            $this->renderPartial('transcription', $data = array('transcription' => $transcription));
+            $this->render('transcription', $data = array('transcription' => $transcription));
+	}
+        
+        public function actionAddTranscription()
+	{
+            //$id = $_GET['id'];
+            $voicemailId = $_GET['voicemailId'];
+            $voicemail = Voicemail::model()->findByPk((int)$voicemailId);
+            $this->render('addTranscriptionForm', $data = array('voicemail' => $voicemail));
 	}
 }
