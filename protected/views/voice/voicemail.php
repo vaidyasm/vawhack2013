@@ -236,36 +236,22 @@ html,body {
 					<div id="divContainerRefreshVoicemailsButton"></div>
 				</div>
 				<div id="divContainerVoicemailsList">
-                                    <table>
+                                    <!--<table>-->
                                     <?php
-                                        foreach ($voicemails as $voicemail)
-                                        {
-                                            ?><tr><td><?php
-                                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/voicemail/' . $voicemail->id . '">' . $voicemail->callTime . ', ' . $voicemail->callerId . "</a>";
-                                            ?></td></tr><?php
-                                        }
+//                                        foreach ($voicemails as $voicemail)
+//                                        {
+//                                            ?><tr><td><?php
+//                                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/voicemail/' . $voicemail->id . '">' . $voicemail->callTime . ', ' . $voicemail->callerId . "</a>";
+//                                            ?></td></tr><?php
+//                                        }
                                     ?>
-                                    </table>
+                                    <!--</table>-->
 <?php
-//                                            $this->widget('zii.widgets.grid.CGridView', array(
-//    'dataProvider'=>$voicemails,
-//    'columns'=>array(
-////        'title',          // display the 'title' attribute
-////        'category.name',  // display the 'name' attribute of the 'category' relation
-////        'content:html',   // display the 'content' attribute as purified HTML
-////        array(            // display 'create_time' using an expression
-////            'name'=>'callTime',
-////            'value'=>'date("M j, Y", $data->callTime)',
-////        ),
-////        array(            // display 'author.username' using an expression
-////            'name'=>'callerId',
-////            'value'=>'$data->callerId',
-////        ),
-////            array(            // display a column with "view", "update" and "delete" buttons
-////                'class'=>'CButtonColumn',
-////            ),
-//    ),
-//));
+    echo "<pre>Selected Voicemail:</pre>";
+    echo var_dump($voicemail);
+    echo "<pre>Associated Transcription[]:</pre>";
+    echo var_dump($voicemail->transcriptions);
+    //echo "<pre>Voicemail: {id: " . $voicemail->id . ", callTime: " . $voicemail->callTime . ", callerId: " . $voicemail->callerId . "}</pre>";
 ?>
                                 </div>
 			</div>
