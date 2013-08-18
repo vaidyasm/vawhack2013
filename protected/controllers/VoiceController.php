@@ -16,7 +16,8 @@ class VoiceController extends Controller
 	{
 		return array(
 			array('allow',  // allow users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'voicemail', 'transcription', 'addTranscription'),
+				'actions'=>array('index', 'voicemail', 
+                                    'transcription', 'addTranscriptionShowForm', 'addTranscriptionPostForm'),
 				//'users'=>array('admin','voice'),
 				'roles'=> array('admin','voice')
 			),
@@ -52,11 +53,19 @@ class VoiceController extends Controller
             $this->render('transcription', $data = array('transcription' => $transcription));
 	}
         
-        public function actionAddTranscription()
+        public function actionAddTranscriptionShowForm()
 	{
             //$id = $_GET['id'];
             $voicemailId = $_GET['voicemailId'];
             $voicemail = Voicemail::model()->findByPk((int)$voicemailId);
-            $this->render('addTranscriptionForm', $data = array('voicemail' => $voicemail));
+            $this->render('addTranscriptionShowForm', $data = array('voicemail' => $voicemail));
+	}
+        
+        public function actionAddTranscriptionPostForm()
+	{
+            //$id = $_GET['id'];
+//            $voicemailId = $_GET['voicemailId'];
+//            $voicemail = Voicemail::model()->findByPk((int)$voicemailId);
+            $this->render('addTranscriptionPostForm');
 	}
 }
