@@ -16,3 +16,10 @@ $this->breadcrumbs = array(
     }
     ?>
 </table>
+<?php
+    $cat = (Category::model()->findByPk(11));
+    echo var_dump($cat);
+    echo var_dump($cat->parentCategory);
+    echo var_dump($cat->childCategory);    
+    echo var_dump($cat->voicemails);
+?>

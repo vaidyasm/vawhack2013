@@ -9,14 +9,14 @@
  * @property string $title
  * @property string $description
  */
-class Categorytype extends CActiveRecord
+class Category extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'categorytype';
+		return 'category';
 	}
 
 	/**
@@ -44,6 +44,9 @@ class Categorytype extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    	'parentCategory' => array(self::MANY_MANY, 'Category', 'category(id, parent)'),
+                        'childCategory' => array(self::MANY_MANY, 'Category', 'category(parent, id)'),
+			'voicemails' => array(self::MANY_MANY, 'Voicemail', 'voicemailcategory(voicemailId, categoryId)'),
 		);
 	}
 
