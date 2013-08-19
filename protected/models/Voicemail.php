@@ -50,8 +50,7 @@ class Voicemail extends CActiveRecord
 		return array(
 			'followups' => array(self::HAS_MANY, 'Followup', 'voicemailId'),
 			'transcriptions' => array(self::HAS_MANY, 'Transcription', 'voicemailId'),
-			//'voicemailcategories' => array(self::HAS_MANY, 'Voicemailcategory', 'voicemailId'),
-                        'categories' => array(self::MANY_MANY, 'CategoryType', 'categorytype(voicemailId, categoryTypeId'),
+                        'categories' => array(self::MANY_MANY, 'Category', 'voicemailcategory(voicemailId, categoryId)'),
 		);
 	}
 
