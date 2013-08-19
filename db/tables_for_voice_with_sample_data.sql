@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 18, 2013 at 08:00 AM
+-- Generation Time: Aug 19, 2013 at 05:38 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorytype`
+-- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `categorytype` (
+CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
   `parent` int(11) NOT NULL COMMENT 'Self ref key: category.id',
   `title` varchar(32) NOT NULL COMMENT 'Very short name of this type of violence.',
@@ -36,10 +36,10 @@ CREATE TABLE IF NOT EXISTS `categorytype` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Category of violence.' AUTO_INCREMENT=14 ;
 
 --
--- Dumping data for table `categorytype`
+-- Dumping data for table `category`
 --
 
-INSERT INTO `categorytype` (`id`, `parent`, `title`, `description`) VALUES
+INSERT INTO `category` (`id`, `parent`, `title`, `description`) VALUES
 (1, 0, 'Domestic violence\r\n', 'Domestic violence\r\n'),
 (2, 0, 'Social violence\r\n', 'Social violence\r\n'),
 (3, 0, 'Rape\r\n', 'Rape\r\n'),
@@ -84,7 +84,14 @@ CREATE TABLE IF NOT EXISTS `transcription` (
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`userId`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `transcription`
+--
+
+INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `callerName`, `callerLoc`, `lang`, `text`) VALUES
+(2, 3, 2, 'Bibhusan Bista', 'Kumaripati', 'Nepali', 'prawesh shrestha');
 
 -- --------------------------------------------------------
 
@@ -122,10 +129,17 @@ INSERT INTO `voicemail` (`id`, `callTime`, `callerId`, `vmFileName`) VALUES
 CREATE TABLE IF NOT EXISTS `voicemailcategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key.',
   `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id)',
-  `categoryTypeId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (categoryTypeId) REFERENCES CategoryType(id)',
+  `categoryId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (categoryId) REFERENCES Category(id)',
   PRIMARY KEY (`id`),
-  KEY `voicemailId` (`voicemailId`,`categoryTypeId`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Associates a Voicemail to its category.' AUTO_INCREMENT=1 ;
+  KEY `voicemailId` (`voicemailId`,`categoryId`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Associates a Voicemail to its category.' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `voicemailcategory`
+--
+
+INSERT INTO `voicemailcategory` (`id`, `voicemailId`, `categoryId`) VALUES
+(1, 5, 11);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
