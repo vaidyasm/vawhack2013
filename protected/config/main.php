@@ -11,7 +11,7 @@ return array(
 	'defaultController' => 'users/login',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+//	'preload'=>array('log'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -75,9 +75,9 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				array(
-					'class'=>'CWebLogRoute',
-				),
+//				array(
+//					'class'=>'CWebLogRoute',
+//				),
 			),
 		),
 		'user' => array(
