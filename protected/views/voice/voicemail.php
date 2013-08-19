@@ -9,7 +9,11 @@ $this->breadcrumbs = array(
     'Voice', 'Voicemail',
 );
 echo "<pre>Selected Voicemail:</pre>";
-echo "<pre>Voicemail: {id: " . $voicemail->id . ", callTime: " . $voicemail->callTime . ", callerId: " . $voicemail->callerId . "}</pre>";
+echo "<pre>Voicemail: {id: " . $voicemail->id . 
+        ", callTime: " . $voicemail->callTime . 
+        ", callerId: " . $voicemail->callerId . 
+        ", vmFileName: " . $voicemail->vmFileName . 
+     "}</pre>";
 
 echo "<pre>Voicemail Categories[]:</pre>";
 echo "<ul>";
