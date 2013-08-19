@@ -36,7 +36,7 @@ foreach ($voicemail->transcriptions as $transcription)
 }
 echo "</ul>";
 ?>
-<a href="<?= Yii::app()->request->baseUrl . '/index.php/voice/addTranscriptionShowForm/voicemailId/' . $voicemail->id ?>">Add Transcription</a>
+<a href="<?= Yii::app()->request->baseUrl . '/index.php/voice/addTranscriptionShowForm/voicemailId/' . $voicemail->id ?>">Add a transcription</a>
 <?php
 echo "<pre>Associated Followups[]:</pre>";
 
@@ -55,4 +55,4 @@ foreach ($voicemail->followups as $followup)
     '</pre>';
 }
 ?>
-<a href="<?= Yii::app()->request->baseUrl . '/index.php/voice/addTranscriptionShowForm/voicemailId/' . $voicemail->id ?>">Add Transcription</a>
+<a href="<?= Yii::app()->request->baseUrl . '/index.php/voice/addFollowupShowForm/voicemailId/' . $voicemail->id ?>">Add a follow-up message</a>
