@@ -31,8 +31,8 @@ foreach ($voicemail->transcriptions as $transcription)
     '{ id: ' . $transcription->id .
     ', voicemailId: ' . $transcription->voicemailId .
     ', userId: ' . $transcription->userId .
-    ', callerName: ' . $transcription->callerName .
-    ', callerLoc: ' . $transcription->callerLoc .
+//    ', callerName: ' . $transcription->callerName .
+//    ', callerLoc: ' . $transcription->callerLoc .
     ', lang: ' . $transcription->lang .
     ', text: ' . $transcription->text . ' }' .
 //    '</a>' .
@@ -49,12 +49,9 @@ foreach ($voicemail->followups as $followup)
     echo '<pre>' .
 //    '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/addTranscription/' . $transcription->id . '">' .
     '{ id: ' . $followup->id .
-    ', voicemailId: ' . $transcription->voicemailId .
-    ', userId: ' . $transcription->userId .
-    ', callerName: ' . $transcription->callerName .
-    ', callerLoc: ' . $transcription->callerLoc .
-    ', lang: ' . $transcription->lang .
-    ', text: ' . $transcription->text . '}' .
+    ', voicemailId: ' . $followup->voicemailId .
+    ', userId: ' . $followup->userId .
+    ', text: ' . $followup->text . '}' .
 //    '</a>' .
     '</pre>';
 }

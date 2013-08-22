@@ -7,13 +7,12 @@
  * @property integer $id
  * @property integer $voicemailId
  * @property integer $userId
- * @property string $callerName
- * @property string $callerLoc
  * @property string $lang
  * @property string $text
  *
  * The followings are the available model relations:
  * @property Voicemail $voicemail
+ * @property Users $user
  */
 class Transcription extends CActiveRecord
 {
@@ -33,11 +32,11 @@ class Transcription extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('voicemailId, userId, callerName, callerLoc, lang, text', 'required'),
+			array('voicemailId, userId, lang, text', 'required'),
 			array('voicemailId, userId', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, voicemailId, userId, callerName, callerLoc, lang, text', 'safe', 'on'=>'search'),
+			array('id, voicemailId, userId, lang, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,6 +49,7 @@ class Transcription extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'voicemail' => array(self::BELONGS_TO, 'Voicemail', 'voicemailId'),
+			'user' => array(self::BELONGS_TO, 'Users', 'userId'),
 		);
 	}
 
@@ -60,10 +60,8 @@ class Transcription extends CActiveRecord
 	{
 		return array(
 			'id' => 'Primary Key.',
-			'voicemailId' => 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Transcription is for.',
-			'userId' => 'Foreign key: users.id. Indicates the user who created this transcription.',
-			'callerName' => 'Full name of the caller. Transcribed by the user.',
-			'callerLoc' => 'Location of the caller. Transcribed by user.',
+			'voicemailId' => 'Id of related voicemail.',
+			'userId' => 'User id of transcriber.',
 			'lang' => 'Language of this transcription.',
 			'text' => 'Transcription text.',
 		);
@@ -90,8 +88,6 @@ class Transcription extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('voicemailId',$this->voicemailId);
 		$criteria->compare('userId',$this->userId);
-		$criteria->compare('callerName',$this->callerName,true);
-		$criteria->compare('callerLoc',$this->callerLoc,true);
 		$criteria->compare('lang',$this->lang,true);
 		$criteria->compare('text',$this->text,true);
 

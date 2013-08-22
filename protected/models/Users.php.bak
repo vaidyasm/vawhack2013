@@ -10,9 +10,6 @@
  * @property string $email
  * @property string $password
  * @property string $role
- *
- * The followings are the available model relations:
- * @property Transcription[] $transcriptions
  */
 class Users extends CActiveRecord
 {

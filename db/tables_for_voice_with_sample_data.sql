@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 19, 2013 at 05:38 PM
+-- Generation Time: Aug 22, 2013 at 02:18 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -78,8 +78,6 @@ CREATE TABLE IF NOT EXISTS `transcription` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key.',
   `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Transcription is for.',
   `userId` int(11) NOT NULL COMMENT 'Foreign key: users.id. Indicates the user who created this transcription.',
-  `callerName` text NOT NULL COMMENT 'Full name of the caller. Transcribed by the user.',
-  `callerLoc` text NOT NULL COMMENT 'Location of the caller. Transcribed by user.',
   `lang` text NOT NULL COMMENT 'Language of this transcription.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
@@ -90,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `transcription` (
 -- Dumping data for table `transcription`
 --
 
-INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `callerName`, `callerLoc`, `lang`, `text`) VALUES
-(2, 3, 2, 'Bibhusan Bista', 'Kumaripati', 'Nepali', 'prawesh shrestha');
+INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `lang`, `text`) VALUES
+(2, 3, 2, 'Nepali', 'prawesh shrestha');
 
 -- --------------------------------------------------------
 
@@ -140,6 +138,22 @@ CREATE TABLE IF NOT EXISTS `voicemailcategory` (
 
 INSERT INTO `voicemailcategory` (`id`, `voicemailId`, `categoryId`) VALUES
 (1, 5, 11);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `voicemailinfo`
+--
+
+CREATE TABLE IF NOT EXISTS `voicemailinfo` (
+  `id` int(11) NOT NULL,
+  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id)',
+  `callerName` text NOT NULL COMMENT 'Name of the caller.',
+  `callerDistirict` text NOT NULL COMMENT 'District of the caller.',
+  `lastFollowUp` timestamp NULL DEFAULT NULL COMMENT 'Timestamp of last followup.',
+  PRIMARY KEY (`id`),
+  KEY `voicemailId` (`voicemailId`,`lastFollowUp`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.';
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

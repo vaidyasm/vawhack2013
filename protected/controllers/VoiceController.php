@@ -61,7 +61,12 @@ class VoiceController extends Controller
     {
         $voicemailId = $_GET['voicemailId'];
         $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
-        $this->render('addTranscriptionShowForm', $data = array('voicemail' => $voicemail));
+//        $this->render('addTranscriptionShowForm', $data = array('voicemail' => $voicemail));
+        $transcription = Transcription::model();
+        $transcription->voicemailId = $voicemail->id;
+        $this->render('addTranscriptionShowForm', $data = array(
+            'voicemail' => $voicemail,
+            'model' => $transcription));
     }
 
     public function actionAddTranscriptionPostForm()

@@ -1,27 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "users".
+ * This is the model class for table "voicemailinfo".
  *
- * The followings are the available columns in table 'users':
+ * The followings are the available columns in table 'voicemailinfo':
  * @property integer $id
- * @property string $firstName
- * @property string $lastName
- * @property string $email
- * @property string $password
- * @property string $role
+ * @property integer $voicemailId
+ * @property string $callerName
+ * @property string $callerDistirict
+ * @property string $lastFollowUp
  *
  * The followings are the available model relations:
- * @property Transcription[] $transcriptions
+ * @property Voicemail $voicemail
  */
-class Users extends CActiveRecord
+class Voicemailinfo extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'users';
+		return 'voicemailinfo';
 	}
 
 	/**
@@ -32,13 +31,12 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstName, lastName, email, password, role', 'required'),
-			array('firstName, lastName, email, password', 'length', 'max'=>100),
-			array('role', 'length', 'max'=>5),
-			array('email', 'email'),
+			array('id, voicemailId, callerName, callerDistirict', 'required'),
+			array('id, voicemailId', 'numerical', 'integerOnly'=>true),
+			array('lastFollowUp', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, firstName, lastName, email, password, role', 'safe', 'on'=>'search'),
+			array('id, voicemailId, callerName, callerDistirict, lastFollowUp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,7 +48,7 @@ class Users extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'transcriptions' => array(self::HAS_MANY, 'Transcription', 'userId'),
+			'voicemail' => array(self::BELONGS_TO, 'Voicemail', 'voicemailId'),
 		);
 	}
 
@@ -61,11 +59,10 @@ class Users extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'firstName' => 'First Name',
-			'lastName' => 'Last Name',
-			'email' => 'Email',
-			'password' => 'Password',
-			'role' => 'Role',
+			'voicemailId' => 'Id of voicemail this record belongs to.',
+			'callerName' => 'Name of the caller.',
+			'callerDistirict' => 'District of the caller.',
+			'lastFollowUp' => 'Timestamp of last followup if any.',
 		);
 	}
 
@@ -88,11 +85,10 @@ class Users extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('firstName',$this->firstName,true);
-		$criteria->compare('lastName',$this->lastName,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('role',$this->role,true);
+		$criteria->compare('voicemailId',$this->voicemailId);
+		$criteria->compare('callerName',$this->callerName,true);
+		$criteria->compare('callerDistirict',$this->callerDistirict,true);
+		$criteria->compare('lastFollowUp',$this->lastFollowUp,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -103,7 +99,7 @@ class Users extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Users the static model class
+	 * @return Voicemailinfo the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
