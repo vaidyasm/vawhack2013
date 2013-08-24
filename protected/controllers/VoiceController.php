@@ -46,7 +46,7 @@ class VoiceController extends Controller
     {
         $id = $_GET['id'];
         //$voicemail = Voicemail::model()->with('transcription')->findByPk((int)$id);
-        $voicemail = Voicemail::model()->with('voicemailInfo') ->findByPk((int) $id);
+        $voicemail = Voicemail::model()->with('voicemailInfo')->findByPk((int) $id);
         $this->render('voicemail', $data = array('voicemail' => $voicemail));
     }
 
@@ -73,7 +73,22 @@ class VoiceController extends Controller
     {
 //        $voicemailId = $_GET['voicemailId'];
 //        $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
-        $this->render('addTranscriptionPostForm');
+
+        $transcription = new Transcription();
+        $saveSuccess = FALSE;
+        if (isset($_POST['Transcription']))
+        {
+            $transcription->attributes = $_POST['Transcription'];
+            if ($transcription->validate())
+            {
+                $saveSuccess = $transcription->save();
+            }
+        }
+
+        $this->render('addTranscriptionPostForm', $data = array(
+            'transcription' => $transcription,
+            'saveSuccess' => $saveSuccess,
+        ));
     }
 
     public function actionAddFollowupShowForm()

@@ -6,4 +6,13 @@ $this->breadcrumbs=array(
 	'Voice', 'Voicemail', 'Add Transcription' , 'Save'
 );
 ?>
-<h2>Not implemented yet!</h2>
+<?php
+    echo ($saveSuccess == TRUE) ? 'Transcription was saved. ' : 'Transcription could not be saved.';
+    echo '<pre><ul>' .
+    '<li>id: ' . $transcription->id . '</li>' .
+    '<li>voicemailId: ' . $transcription->voicemailId . '</li>' .
+    '<li>userId: ' . $transcription->userId . '</li>' .
+    '<li>lang: ' . $transcription->lang . '</li>' .
+    '<li>text: ' . $transcription->text . '</li>' .
+    '</ul></pre>';
+?>
