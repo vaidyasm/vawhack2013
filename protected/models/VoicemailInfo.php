@@ -13,7 +13,7 @@
  * The followings are the available model relations:
  * @property Voicemail $voicemail
  */
-class Voicemailinfo extends CActiveRecord
+class VoicemailInfo extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name

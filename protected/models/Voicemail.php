@@ -12,7 +12,8 @@
  * The followings are the available model relations:
  * @property Followup[] $followups
  * @property Transcription[] $transcriptions
- * @property Voicemailcategory[] $voicemailcategories
+ * @property Category[] $categories
+ * @property VoicemailInfo $voicemailInfo
  */
 class Voicemail extends CActiveRecord
 {
@@ -51,6 +52,7 @@ class Voicemail extends CActiveRecord
 			'followups' => array(self::HAS_MANY, 'Followup', 'voicemailId'),
 			'transcriptions' => array(self::HAS_MANY, 'Transcription', 'voicemailId'),
                         'categories' => array(self::MANY_MANY, 'Category', 'voicemailcategory(voicemailId, categoryId)'),
+                        'voicemailInfo' => array(self::HAS_ONE, 'VoicemailInfo', 'voicemailId'),
 		);
 	}
 

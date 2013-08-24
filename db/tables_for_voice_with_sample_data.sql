@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 22, 2013 at 02:18 AM
+-- Generation Time: Aug 24, 2013 at 08:05 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -146,14 +146,21 @@ INSERT INTO `voicemailcategory` (`id`, `voicemailId`, `categoryId`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `voicemailinfo` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id)',
   `callerName` text NOT NULL COMMENT 'Name of the caller.',
-  `callerDistirict` text NOT NULL COMMENT 'District of the caller.',
+  `callerDistrict` text NOT NULL COMMENT 'District of the caller.',
   `lastFollowUp` timestamp NULL DEFAULT NULL COMMENT 'Timestamp of last followup.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`lastFollowUp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.';
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `voicemailinfo`
+--
+
+INSERT INTO `voicemailinfo` (`id`, `voicemailId`, `callerName`, `callerDistrict`, `lastFollowUp`) VALUES
+(1, 3, 'Bibhusan', 'Lalitpur', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

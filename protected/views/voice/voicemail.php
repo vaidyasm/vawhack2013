@@ -15,6 +15,18 @@ echo "<pre>Voicemail: {id: " . $voicemail->id .
         ", vmFileName: " . $voicemail->vmFileName . 
      "}</pre>";
 
+echo "<pre>Additional Info:</pre>";
+$voicemailInfo = $voicemail->voicemailInfo;
+if (is_null($voicemailInfo))
+    echo "<pre>No additional info.</pre>";
+else
+{
+     echo "<pre>VoicemailInfo: {id: " . $voicemailInfo->id . 
+        ", Caller Name: " . $voicemailInfo->callerName . 
+        ", Caller District: " . $voicemailInfo->callerDistrict . 
+        ", Last Follow up on: " . $voicemailInfo->lastFollowUp . 
+     "}</pre>";
+}
 echo "<pre>Voicemail Categories[]:</pre>";
 echo "<ul>";
 foreach ($voicemail->categories as $category)
