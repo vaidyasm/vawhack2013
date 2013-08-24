@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 24, 2013 at 08:05 AM
+-- Generation Time: Aug 24, 2013 at 10:31 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -62,11 +62,22 @@ INSERT INTO `category` (`id`, `parent`, `title`, `description`) VALUES
 
 CREATE TABLE IF NOT EXISTS `followup` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
-  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Followup message is for.',
-  `userId` int(11) NOT NULL COMMENT 'Foreign key: users.id. Indicates the user who created this follow up.',
+  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Id of related voicemail.',
+  `userId` int(11) NOT NULL COMMENT 'Foreign key: users.id. User id of followup creator.',
+  `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Follow up notes.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `followup`
+--
+
+INSERT INTO `followup` (`id`, `voicemailId`, `userId`, `editTimestamp`, `text`) VALUES
+(1, 5, 1, '2013-08-24 10:25:04', 'follow up note 1'),
+(2, 5, 1, '2013-08-24 10:20:22', 'follow up note 2'),
+(3, 5, 1, '2013-08-24 10:22:19', 'follow up notes 3'),
+(4, 5, 1, '2013-08-24 10:28:25', 'follow up notes 4');
 
 -- --------------------------------------------------------
 
@@ -82,14 +93,16 @@ CREATE TABLE IF NOT EXISTS `transcription` (
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`userId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `transcription`
 --
 
 INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `lang`, `text`) VALUES
-(2, 3, 2, 'Nepali', 'prawesh shrestha');
+(2, 3, 2, 'Nepali', 'prawesh shrestha'),
+(3, 5, 1, 'English', 'test'),
+(4, 5, 1, 'English', 'Test 2');
 
 -- --------------------------------------------------------
 

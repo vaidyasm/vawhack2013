@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $voicemailId
  * @property integer $userId
+ * @property string $editTimestamp
  * @property string $text
  *
  * The followings are the available model relations:
@@ -32,9 +33,10 @@ class Followup extends CActiveRecord
 		return array(
 			array('voicemailId, userId, text', 'required'),
 			array('voicemailId, userId', 'numerical', 'integerOnly'=>true),
+			array('editTimestamp', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, voicemailId, userId, text', 'safe', 'on'=>'search'),
+			array('id, voicemailId, userId, editTimestamp, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,8 +59,9 @@ class Followup extends CActiveRecord
 	{
 		return array(
 			'id' => 'Primary key.',
-			'voicemailId' => 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Followup message is for.',
-			'userId' => 'Foreign key: users.id. Indicates the user who created this follow up.',
+			'voicemailId' => 'Id of related voicemail.',
+			'userId' => 'User id of followup creator.',
+			'editTimestamp' => 'Created or edited timestamp.',
 			'text' => 'Follow up notes.',
 		);
 	}
@@ -84,6 +87,7 @@ class Followup extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('voicemailId',$this->voicemailId);
 		$criteria->compare('userId',$this->userId);
+		$criteria->compare('editTimestamp',$this->editTimestamp,true);
 		$criteria->compare('text',$this->text,true);
 
 		return new CActiveDataProvider($this, array(

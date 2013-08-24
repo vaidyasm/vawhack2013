@@ -63,6 +63,7 @@ foreach ($voicemail->followups as $followup)
     '{ id: ' . $followup->id .
     ', voicemailId: ' . $followup->voicemailId .
     ', userId: ' . $followup->userId .
+    ', editTimestamp: ' . $followup->editTimestamp .
     ', text: ' . $followup->text . '}' .
 //    '</a>' .
     '</pre>';

@@ -95,15 +95,30 @@ class VoiceController extends Controller
     {
         $voicemailId = $_GET['voicemailId'];
         $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
-        $this->render('addFollowupShowForm', $data = array('voicemail' => $voicemail));
+        $followup = Followup::model();
+        $followup->voicemailId = $voicemail->id;
+        $this->render('addFollowupShowForm', $data = array(
+            'voicemail' => $voicemail,
+            'model' => $followup));
     }
 
     public function actionAddFollowupPostForm()
     {
-//        $id = $_GET['id'];
-//        $voicemailId = $_GET['voicemailId'];
-//        $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
-        $this->render('addFollowupPostForm');
+        $followup = new Followup();
+        $saveSuccess = FALSE;
+        if (isset($_POST['Followup']))
+        {
+            $followup->attributes = $_POST['Followup'];
+            if ($followup->validate())
+            {
+                $saveSuccess = $followup->save();
+            }
+        }
+
+        $this->render('addFollowupPostForm', $data = array(
+            'followup' => $followup,
+            'saveSuccess' => $saveSuccess,
+        ));
     }
 
 }
