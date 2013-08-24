@@ -26,8 +26,9 @@ $this->breadcrumbs=array(
 	// See class documentation of CActiveForm for details on this,
 	// you need to use the performAjaxValidation()-method described there.
 	'enableAjaxValidation'=>false,
+	'action'=>Yii::app()->createUrl('//voice/addTranscriptionPostForm'),
+	'method'=>'post',
 )); ?>
-
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
