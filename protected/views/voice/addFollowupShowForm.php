@@ -30,15 +30,17 @@ $this->breadcrumbs=array(
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'voicemailId'); ?>
-		<?php echo $form->textField($model,'voicemailId'); ?>
-		<?php echo $form->error($model,'voicemailId'); ?>
+		<?php //echo $form->labelEx($model,'voicemailId'); ?>
+		<?php echo //$form->textField($model,'voicemailId'); 
+                           $form->hiddenField($model,'voicemailId'); ?>
+		<?php //echo $form->error($model,'voicemailId'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'userId'); ?>
-		<?php echo $form->textField($model,'userId'); ?>
-		<?php echo $form->error($model,'userId'); ?>
+		<?php //echo $form->labelEx($model,'userId'); ?>
+		<?php echo //$form->textField($model,'userId');
+                           $form->hiddenField($model,'userId'); ?>
+		<?php //echo $form->error($model,'userId'); ?>
 	</div>
 
 	<div class="row">

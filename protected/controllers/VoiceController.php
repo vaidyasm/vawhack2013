@@ -2,7 +2,14 @@
 
 class VoiceController extends Controller
 {
-
+    private $user;
+    
+    public function __construct($id, $module=null)
+    {
+        parent::__construct($id, $module);
+        $this->user = Users::model()->findByPk(Yii::app()->user->id);
+    }
+    
     public function filters()
     {
         return array(
@@ -64,6 +71,7 @@ class VoiceController extends Controller
 //        $this->render('addTranscriptionShowForm', $data = array('voicemail' => $voicemail));
         $transcription = Transcription::model();
         $transcription->voicemailId = $voicemail->id;
+        $transcription->userId = $this->user->id;
         $this->render('addTranscriptionShowForm', $data = array(
             'voicemail' => $voicemail,
             'model' => $transcription));
@@ -97,6 +105,7 @@ class VoiceController extends Controller
         $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
         $followup = Followup::model();
         $followup->voicemailId = $voicemail->id;
+        $followup->userId = $this->user->id;
         $this->render('addFollowupShowForm', $data = array(
             'voicemail' => $voicemail,
             'model' => $followup));

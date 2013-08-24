@@ -12,6 +12,7 @@
  *
  * The followings are the available model relations:
  * @property Voicemail $voicemail
+ * @property Users $user
  */
 class Followup extends CActiveRecord
 {
@@ -49,6 +50,7 @@ class Followup extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'voicemail' => array(self::BELONGS_TO, 'Voicemail', 'voicemailId'),
+			'user' => array(self::BELONGS_TO, 'Users', 'userId'),
 		);
 	}
 

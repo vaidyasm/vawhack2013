@@ -38,32 +38,33 @@ echo "<pre>Associated Transcription[]:</pre>";
 echo "<ul>";
 foreach ($voicemail->transcriptions as $transcription)
 {
-    echo '<li><pre>' .
-    '{ id: ' . $transcription->id .
-    ', voicemailId: ' . $transcription->voicemailId .
-    ', userId: ' . $transcription->userId .
-    ', editTimestamp: ' . $transcription->editTimestamp .
-    ', lang: ' . $transcription->lang .
-    ', text: ' . $transcription->text . ' }' .
-    '</pre></li>';
+    $user = $transcription->user;
+    echo '<li><pre><ul>' .
+    '<li>id: ' . $transcription->id . '</li>' .
+    '<li>voicemailId: ' . $transcription->voicemailId . '</li>' .
+    '<li>userId: ' . $transcription->userId . ' (' . $user->firstName . ' ' . $user->lastName . ' [' . $user->role . ']' . ')' . '</li>' .
+    '<li>editTimestamp: ' . $transcription->editTimestamp . '</li>' .
+    '<li>lang: ' . $transcription->lang . '</li>' .
+    '<li>text: ' . $transcription->text . '</li>' .
+    '</ul></pre></li>';
 }
 echo "</ul>";
 ?>
 <a href="<?= Yii::app()->request->baseUrl . '/index.php/voice/addTranscriptionShowForm/voicemailId/' . $voicemail->id ?>">Add a transcription</a>
 <?php
 echo "<pre>Associated Followups[]:</pre>";
-
+echo "<ul>";
 foreach ($voicemail->followups as $followup)
 {
-    echo '<pre>' .
-//    '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/addTranscription/' . $transcription->id . '">' .
-    '{ id: ' . $followup->id .
-    ', voicemailId: ' . $followup->voicemailId .
-    ', userId: ' . $followup->userId .
-    ', editTimestamp: ' . $followup->editTimestamp .
-    ', text: ' . $followup->text . '}' .
-//    '</a>' .
-    '</pre>';
+    $user = $followup->user;
+    echo '<li><pre><ul>' .
+    '<li>id: ' . $followup->id . '</li>' .
+    '<li>voicemailId: ' . $followup->voicemailId . '</li>' .
+    '<li>userId: ' . $followup->userId . ' (' . $user->firstName . ' ' . $user->lastName . ' [' . $user->role . ']' . ')' . '</li>' .
+    '<li>editTimestamp: ' . $followup->editTimestamp . '</li>' .
+    '<li>text: ' . $followup->text . '</li>' .
+    '</ul></pre></li>';
 }
+echo "</ul>";
 ?>
 <a href="<?= Yii::app()->request->baseUrl . '/index.php/voice/addFollowupShowForm/voicemailId/' . $voicemail->id ?>">Add a follow-up message</a>
