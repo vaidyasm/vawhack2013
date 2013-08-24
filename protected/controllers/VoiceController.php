@@ -3,13 +3,13 @@
 class VoiceController extends Controller
 {
     private $user;
-    
-    public function __construct($id, $module=null)
+
+    public function __construct($id, $module = null)
     {
         parent::__construct($id, $module);
         $this->user = Users::model()->findByPk(Yii::app()->user->id);
     }
-    
+
     public function filters()
     {
         return array(
@@ -28,7 +28,8 @@ class VoiceController extends Controller
             array('allow', // allow users to perform 'index' and 'view' actions
                 'actions' => array('index', 'voicemail',
                     'transcription', 'addTranscriptionShowForm', 'addTranscriptionPostForm',
-                    'addFollowupShowForm', 'addFollowupPostForm'),
+                    'addFollowupShowForm', 'addFollowupPostForm',
+                    'editVoicemailInfoShowForm', 'editVoicemailInfoPostForm'),
                 //'users'=>array('admin','voice'),
                 'roles' => array('admin', 'voice')
             ),
@@ -55,6 +56,83 @@ class VoiceController extends Controller
         //$voicemail = Voicemail::model()->with('transcription')->findByPk((int)$id);
         $voicemail = Voicemail::model()->with('voicemailInfo')->findByPk((int) $id);
         $this->render('voicemail', $data = array('voicemail' => $voicemail));
+    }
+
+    public function actionEditVoicemailInfoShowForm()
+    {
+        $keyName = 'voicemailId';
+        $paramVoicemailId = array_key_exists($keyName, $_GET) ?
+                $_GET[$keyName] : null;
+        $voicemailId = (is_numeric($paramVoicemailId) && $paramVoicemailId > 0) ?
+                $paramVoicemailId : null;
+        if (is_null($voicemailId))
+        {
+            echo 'Error: A valid numeric parameter "voicemailId" must be provided!';
+        }
+        else
+        {
+            $voicemail = Voicemail::model()->with('voicemailInfo')->findByPk($voicemailId);
+            $voicemailInfo = $voicemail->voicemailInfo;
+            if (!isset($voicemailInfo) || is_null($voicemailInfo))
+            {
+                $voicemailInfo = new VoicemailInfo();
+                $voicemailInfo->voicemailId = $voicemail->id;
+            }
+            
+            $this->render('editVoicemailInfoShowForm', $data = array(
+                'voicemail' => $voicemail,
+                'model' => $voicemailInfo,
+            ));
+        }
+    }
+
+    public function actionEditVoicemailInfoPostForm()
+    {
+        $voicemail = null;
+        $voicemailInfo = null;
+        $saveSuccess = FALSE;
+
+        
+        $keyName = 'voicemailId';
+        $paramVoicemailId = array_key_exists($keyName, $_GET) ?
+                $_GET[$keyName] : null;
+        $voicemailId = (is_numeric($paramVoicemailId) && $paramVoicemailId > 0) ?
+                $paramVoicemailId : null;
+        if (is_null($voicemailId))
+        {
+            echo 'Error: Invalid post url! A valid numeric parameter "voicemailId" must be provided!';
+        }
+        else
+        {
+            $voicemail = Voicemail::model()->with('voicemailInfo')->findByPk($voicemailId);
+            $voicemailInfo = $voicemail->voicemailInfo;
+            if (!isset($voicemailInfo) || is_null($voicemailInfo))
+            {
+                $voicemailInfo = new VoicemailInfo();
+                $voicemailInfo->attributes = $_POST['VoicemailInfo'];
+                $voicemailInfo->voicemailId = $voicemail->id;
+            }
+            
+            if (isset($_POST['VoicemailInfo']))
+            {
+                $POST_voicemailInfo = $_POST['VoicemailInfo'];
+                $POST_voicemailInfo_AR = new VoicemailInfo();
+                $POST_voicemailInfo_AR->attributes = $POST_voicemailInfo;
+
+                $voicemailInfo->callerName = $POST_voicemailInfo_AR->callerName;
+                $voicemailInfo->callerDistrict = $POST_voicemailInfo_AR->callerDistrict;
+
+                if ($voicemailInfo->validate())
+                {
+                    $saveSuccess = $voicemailInfo->save();
+                }
+            }
+        }
+        
+        $this->render('editVoicemailInfoPostForm', $data = array(
+            'voicemailInfo' => $voicemailInfo,
+            'saveSuccess' => $saveSuccess,
+        ));
     }
 
     public function actionTranscription()

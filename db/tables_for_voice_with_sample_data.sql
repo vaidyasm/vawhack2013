@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 24, 2013 at 11:48 AM
+-- Generation Time: Aug 24, 2013 at 05:30 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `followup` (
   `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Follow up notes.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `followup`
@@ -77,7 +77,9 @@ INSERT INTO `followup` (`id`, `voicemailId`, `userId`, `editTimestamp`, `text`) 
 (1, 5, 1, '2013-08-24 10:25:04', 'follow up note 1'),
 (2, 5, 1, '2013-08-24 10:20:22', 'follow up note 2'),
 (3, 5, 1, '2013-08-24 10:22:19', 'follow up notes 3'),
-(4, 5, 1, '2013-08-24 10:28:25', 'follow up notes 4');
+(4, 5, 1, '2013-08-24 10:28:25', 'follow up notes 4'),
+(5, 3, 1, '2013-08-24 15:11:12', 'follow up 1'),
+(6, 2, 1, '2013-08-24 15:26:12', 'followup by admin');
 
 -- --------------------------------------------------------
 
@@ -94,17 +96,21 @@ CREATE TABLE IF NOT EXISTS `transcription` (
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`userId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `transcription`
 --
 
 INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `editTimestamp`, `lang`, `text`) VALUES
-(2, 3, 2, '0000-00-00 00:00:00', 'Nepali', 'prawesh shrestha'),
-(3, 5, 1, '0000-00-00 00:00:00', 'English', 'test'),
-(4, 5, 1, '0000-00-00 00:00:00', 'English', 'Test 2'),
-(5, 7, 1, '2013-07-08 12:52:49', 'English', 'Thank you for the recording. See you in a while.');
+(2, 3, 2, '2013-07-15 06:20:00', 'Nepali', 'prawesh shrestha'),
+(3, 5, 2, '2013-08-24 12:22:19', 'English', 'test'),
+(4, 5, 2, '2013-08-24 12:22:19', 'English', 'Test 2'),
+(5, 7, 2, '2013-08-24 12:21:45', 'English', 'Thank you for the recording. See you in a while.'),
+(6, 5, 2, '2013-08-24 12:30:17', 'English', 'Test transcription text 3'),
+(7, 7, 1, '2013-08-24 13:24:55', 'English', 'test text 2'),
+(8, 3, 1, '2013-08-24 15:10:55', 'English', 'test 2'),
+(9, 2, 1, '2013-08-24 15:25:45', 'Nepali', 'record message');
 
 -- --------------------------------------------------------
 
@@ -168,14 +174,15 @@ CREATE TABLE IF NOT EXISTS `voicemailinfo` (
   `lastFollowUp` timestamp NULL DEFAULT NULL COMMENT 'Timestamp of last followup.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`lastFollowUp`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `voicemailinfo`
 --
 
 INSERT INTO `voicemailinfo` (`id`, `voicemailId`, `callerName`, `callerDistrict`, `lastFollowUp`) VALUES
-(1, 3, 'Bibhusan', 'Lalitpur', NULL);
+(1, 3, 'Bibhusan Bista', 'Lalitpur', NULL),
+(2, 7, 'Anjesh Tuladhar', 'Lalitpur', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -15,7 +15,7 @@ echo "<pre>Voicemail: {id: " . $voicemail->id .
         ", vmFileName: " . $voicemail->vmFileName . 
      "}</pre>";
 
-echo "<pre>Additional Info:</pre>";
+echo '<pre>Additional Info:</pre>';
 $voicemailInfo = $voicemail->voicemailInfo;
 if (is_null($voicemailInfo))
     echo "<pre>No additional info.</pre>";
@@ -27,8 +27,9 @@ else
         ", Last Follow up on: " . $voicemailInfo->lastFollowUp . 
      "}</pre>";
 }
-echo "<pre>Voicemail Categories[]:</pre>";
-echo "<ul>";
+echo ' <a href="' . Yii::app()->createUrl('//voice/editVoicemailInfoShowForm', array('voicemailId'=>$voicemail->id)) . '">Edit</a>';
+echo '<pre>Voicemail Categories[]:</pre>';
+echo '<ul>';
 foreach ($voicemail->categories as $category)
 {
     echo "<li>" . $category->title . "</li><br />";

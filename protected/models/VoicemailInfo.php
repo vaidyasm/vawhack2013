@@ -7,7 +7,7 @@
  * @property integer $id
  * @property integer $voicemailId
  * @property string $callerName
- * @property string $callerDistirict
+ * @property string $callerDistrict
  * @property string $lastFollowUp
  *
  * The followings are the available model relations:
@@ -31,12 +31,12 @@ class VoicemailInfo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, voicemailId, callerName, callerDistirict', 'required'),
-			array('id, voicemailId', 'numerical', 'integerOnly'=>true),
+			array('voicemailId, callerName, callerDistrict', 'required'),
+			array('voicemailId', 'numerical', 'integerOnly'=>true),
 			array('lastFollowUp', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, voicemailId, callerName, callerDistirict, lastFollowUp', 'safe', 'on'=>'search'),
+			array('voicemailId, callerName, callerDistrict, lastFollowUp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +61,7 @@ class VoicemailInfo extends CActiveRecord
 			'id' => 'ID',
 			'voicemailId' => 'Id of voicemail this record belongs to.',
 			'callerName' => 'Name of the caller.',
-			'callerDistirict' => 'District of the caller.',
+			'callerDistrict' => 'District of the caller.',
 			'lastFollowUp' => 'Timestamp of last followup if any.',
 		);
 	}
@@ -87,7 +87,7 @@ class VoicemailInfo extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('voicemailId',$this->voicemailId);
 		$criteria->compare('callerName',$this->callerName,true);
-		$criteria->compare('callerDistirict',$this->callerDistirict,true);
+		$criteria->compare('callerDistrict',$this->callerDistrict,true);
 		$criteria->compare('lastFollowUp',$this->lastFollowUp,true);
 
 		return new CActiveDataProvider($this, array(
