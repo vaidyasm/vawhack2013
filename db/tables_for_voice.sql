@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 19, 2013 at 05:48 PM
+-- Generation Time: Aug 24, 2013 at 11:48 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -43,11 +43,12 @@ CREATE TABLE IF NOT EXISTS `category` (
 
 CREATE TABLE IF NOT EXISTS `followup` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
-  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Followup message is for.',
-  `userId` int(11) NOT NULL COMMENT 'Foreign key: users.id. Indicates the user who created this follow up.',
+  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Id of related voicemail.',
+  `userId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (userId) REFERENCES Users(id). User id of transcriber.',
+  `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Follow up notes.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -57,15 +58,14 @@ CREATE TABLE IF NOT EXISTS `followup` (
 
 CREATE TABLE IF NOT EXISTS `transcription` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key.',
-  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Transcription is for.',
-  `userId` int(11) NOT NULL COMMENT 'Foreign key: users.id. Indicates the user who created this transcription.',
-  `callerName` text NOT NULL COMMENT 'Full name of the caller. Transcribed by the user.',
-  `callerLoc` text NOT NULL COMMENT 'Location of the caller. Transcribed by user.',
+  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Id of related voicemail.',
+  `userId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (userId) REFERENCES Users(id). User id of transcriber.',
+  `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `lang` text NOT NULL COMMENT 'Language of this transcription.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`userId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -95,6 +95,22 @@ CREATE TABLE IF NOT EXISTS `voicemailcategory` (
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`categoryId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Associates a Voicemail to its category.' AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `voicemailinfo`
+--
+
+CREATE TABLE IF NOT EXISTS `voicemailinfo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id)',
+  `callerName` text NOT NULL COMMENT 'Name of the caller.',
+  `callerDistrict` text NOT NULL COMMENT 'District of the caller.',
+  `lastFollowUp` timestamp NULL DEFAULT NULL COMMENT 'Timestamp of last followup.',
+  PRIMARY KEY (`id`),
+  KEY `voicemailId` (`voicemailId`,`lastFollowUp`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=2 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

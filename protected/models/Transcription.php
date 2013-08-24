@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $voicemailId
  * @property integer $userId
+ * @property string $editTimestamp
  * @property string $lang
  * @property string $text
  *
@@ -34,9 +35,10 @@ class Transcription extends CActiveRecord
 		return array(
 			array('voicemailId, userId, lang, text', 'required'),
 			array('voicemailId, userId', 'numerical', 'integerOnly'=>true),
+			array('editTimestamp', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, voicemailId, userId, lang, text', 'safe', 'on'=>'search'),
+			array('id, voicemailId, userId, editTimestamp, lang, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +64,7 @@ class Transcription extends CActiveRecord
 			'id' => 'Primary Key.',
 			'voicemailId' => 'Id of related voicemail.',
 			'userId' => 'User id of transcriber.',
+			'editTimestamp' => 'Created or edited timestamp.',
 			'lang' => 'Language of this transcription.',
 			'text' => 'Transcription text.',
 		);
@@ -88,6 +91,7 @@ class Transcription extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('voicemailId',$this->voicemailId);
 		$criteria->compare('userId',$this->userId);
+                $criteria->compare('editTimestamp',$this->editTimestamp,true);
 		$criteria->compare('lang',$this->lang,true);
 		$criteria->compare('text',$this->text,true);
 

@@ -53,7 +53,7 @@ $this->breadcrumbs=array(
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'text'); ?>
-		<?php echo $form->textField($model,'text'); ?>
+		<?php echo $form->textArea($model,'text'); ?>
 		<?php echo $form->error($model,'text'); ?>
 	</div>
 

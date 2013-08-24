@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 24, 2013 at 10:31 AM
+-- Generation Time: Aug 24, 2013 at 11:48 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -63,7 +63,7 @@ INSERT INTO `category` (`id`, `parent`, `title`, `description`) VALUES
 CREATE TABLE IF NOT EXISTS `followup` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
   `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Id of related voicemail.',
-  `userId` int(11) NOT NULL COMMENT 'Foreign key: users.id. User id of followup creator.',
+  `userId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (userId) REFERENCES Users(id). User id of transcriber.',
   `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Follow up notes.',
   PRIMARY KEY (`id`)
@@ -87,22 +87,24 @@ INSERT INTO `followup` (`id`, `voicemailId`, `userId`, `editTimestamp`, `text`) 
 
 CREATE TABLE IF NOT EXISTS `transcription` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key.',
-  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Indicates the Voicemail which this Transcription is for.',
-  `userId` int(11) NOT NULL COMMENT 'Foreign key: users.id. Indicates the user who created this transcription.',
+  `voicemailId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (voicemailId) REFERENCES Voicemail(id). Id of related voicemail.',
+  `userId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (userId) REFERENCES Users(id). User id of transcriber.',
+  `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `lang` text NOT NULL COMMENT 'Language of this transcription.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`userId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `transcription`
 --
 
-INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `lang`, `text`) VALUES
-(2, 3, 2, 'Nepali', 'prawesh shrestha'),
-(3, 5, 1, 'English', 'test'),
-(4, 5, 1, 'English', 'Test 2');
+INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `editTimestamp`, `lang`, `text`) VALUES
+(2, 3, 2, '0000-00-00 00:00:00', 'Nepali', 'prawesh shrestha'),
+(3, 5, 1, '0000-00-00 00:00:00', 'English', 'test'),
+(4, 5, 1, '0000-00-00 00:00:00', 'English', 'Test 2'),
+(5, 7, 1, '2013-07-08 12:52:49', 'English', 'Thank you for the recording. See you in a while.');
 
 -- --------------------------------------------------------
 

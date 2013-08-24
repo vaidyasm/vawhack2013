@@ -39,15 +39,12 @@ echo "<ul>";
 foreach ($voicemail->transcriptions as $transcription)
 {
     echo '<li><pre>' .
-//    '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/addTranscription/' . $transcription->id . '">' .
     '{ id: ' . $transcription->id .
     ', voicemailId: ' . $transcription->voicemailId .
     ', userId: ' . $transcription->userId .
-//    ', callerName: ' . $transcription->callerName .
-//    ', callerLoc: ' . $transcription->callerLoc .
+    ', editTimestamp: ' . $transcription->editTimestamp .
     ', lang: ' . $transcription->lang .
     ', text: ' . $transcription->text . ' }' .
-//    '</a>' .
     '</pre></li>';
 }
 echo "</ul>";
