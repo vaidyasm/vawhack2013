@@ -58,7 +58,8 @@ class VoiceController extends Controller
         $id = $_GET['id'];
         //$voicemail = Voicemail::model()->with('transcription')->findByPk((int)$id);
         $voicemail = Voicemail::model()->with('voicemailInfo')->findByPk((int) $id);
-        $this->render('voicemail', $data = array('voicemail' => $voicemail));
+//        $this->render('voicemail', $data = array('voicemail' => $voicemail));
+        $this->renderPartial('voice-detail', $data = array('voicemail' => $voicemail));
     }
 
     public function actionGetCategories()
