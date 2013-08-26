@@ -4,15 +4,8 @@
  * This is the model class for table "voicemailcategory".
  *
  * The followings are the available columns in table 'voicemailcategory':
- * @property integer $id
- * @property integer $voicemailId
- * @property integer $categoryTypeId
- *
- * The followings are the available model relations:
- * @property Voicemail $voicemail
- * @property CategoryType $categoryType
  */
-class Voicemailcategory extends CActiveRecord
+class VoicemailCategories extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name

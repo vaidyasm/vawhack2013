@@ -1,5 +1,5 @@
 <?php
-/* @var $this UsersController */
+/* @var $this VoiceController */
 /* @var $dataProvider CActiveDataProvider */
 
 //$this->layout = 'protected/views/layouts/main_bootstrap.php';
@@ -15,7 +15,8 @@ echo "<pre>Voicemail: {id: " . $voicemail->id .
         ", vmFileName: " . $voicemail->vmFileName . 
      "}</pre>";
 
-echo '<pre>Additional Info:</pre>';
+echo '<pre>Additional Info: ';
+echo '<a href="' . Yii::app()->createUrl('//voice/editVoicemailInfoShowForm', array('voicemailId'=>$voicemail->id)) . '">Edit</a></pre>';
 $voicemailInfo = $voicemail->voicemailInfo;
 if (is_null($voicemailInfo))
     echo "<pre>No additional info.</pre>";
@@ -27,8 +28,8 @@ else
         ", Last Follow up on: " . $voicemailInfo->lastFollowUp . 
      "}</pre>";
 }
-echo ' <a href="' . Yii::app()->createUrl('//voice/editVoicemailInfoShowForm', array('voicemailId'=>$voicemail->id)) . '">Edit</a>';
-echo '<pre>Voicemail Categories[]:</pre>';
+echo '<pre>Voicemail Categories[]: ';
+echo '<a href="' . Yii::app()->createUrl('//voice/editVoicemailCategoriesShowForm', array('voicemailId'=>$voicemail->id)) . '">Edit</a></pre>';
 echo '<ul>';
 foreach ($voicemail->categories as $category)
 {

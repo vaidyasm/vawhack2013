@@ -1,5 +1,4 @@
 <?php
-
 class VoiceController extends Controller
 {
     private $user;
@@ -25,11 +24,15 @@ class VoiceController extends Controller
     public function accessRules()
     {
         return array(
+            array('allow',
+                'actions' => array('getCategories'),
+                'users' => array('*')),
             array('allow', // allow users to perform 'index' and 'view' actions
                 'actions' => array('index', 'voicemail',
                     'transcription', 'addTranscriptionShowForm', 'addTranscriptionPostForm',
                     'addFollowupShowForm', 'addFollowupPostForm',
-                    'editVoicemailInfoShowForm', 'editVoicemailInfoPostForm'),
+                    'editVoicemailInfoShowForm', 'editVoicemailInfoPostForm',
+                    'editVoicemailCategoriesShowForm', 'editVoicemailCategoriesPostForm'),
                 //'users'=>array('admin','voice'),
                 'roles' => array('admin', 'voice')
             ),
@@ -58,6 +61,80 @@ class VoiceController extends Controller
         $this->render('voicemail', $data = array('voicemail' => $voicemail));
     }
 
+    public function actionGetCategories()
+    {
+        $categories = Category::model()->findAll();
+        $this->renderPartial('categoresXMLView', $data = array('xmlData' => $this->getCategoriesAsXMLData()));
+    }
+
+    public function getCategoriesAsXMLData()
+    {
+        $rval = '<root>';
+        $categories = Category::model()->findAll();
+
+        foreach ($categories as $category)
+        {
+            $rval .= '<item id="' . $category->id . '" parent_id="' . $category->parent . '">';
+            $rval .= '<content>';
+            $rval .= '<name><![CDATA[<' . $category->title . ']]></name>';
+            $rval .= '</content>';
+            $rval .= '</item>';
+        }
+        $rval .= '</root>';
+        return $rval;
+    }
+
+    function categoriesAsTree($rootCategory)
+    {
+        $rval = array();
+        $rval['node'] = $rootCategory;
+        $rval['children'] = array();
+        $childCategories = $rootCategory->childCategories;
+        foreach ($childCategories as $childCategory)
+        {
+            $rval['children'] = $this->categoriesAsTree($childCategory);
+        }
+        return $rval;
+    }
+
+    public function actionEditVoicemailCategoriesShowForm()
+    {
+        $voicemailId = $_GET['voicemailId'];
+        $voicemail = Voicemail::model()->with('categories')->findByPk((int) $voicemailId);
+
+        $rootCategory = Category::getRootCategory();
+
+        $this->render('editVoicemailCategoriesShowForm', $data = array(
+            'voicemail' => $voicemail,
+            'rootCategory' => $rootCategory,
+        ));
+    }
+
+    public function actionEditVoicemailCategoriesPostForm()
+    {
+        $voicemailId = $_GET['voicemailId'];
+        $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
+        $checkedIds = array();
+        
+        $voicemailCategories = new VoicemailCategoriesBool($voicemail);
+        $saveSuccess = FALSE;
+        if (isset($_POST['VoicemailCategoriesBool']))
+        {
+            $voicemailCategoriesPOST = $_POST['VoicemailCategoriesBool'];
+            $checkedIds = $voicemailCategoriesPOST['boolArray'];
+        }
+
+        $assignedCategories = Category::model()->findAllByAttributes(array('id' => $checkedIds));
+        
+        $this->render('editVoicemailCategoriesPostForm', $data = array(
+            'voicemailCategories' => $voicemailCategories,
+            'saveSuccess' => $saveSuccess,
+            'checkedIds' => $checkedIds,
+            'rootCategory' => Category::getRootCategory(),
+            'assignedCategories' => $assignedCategories,
+        ));
+    }
+
     public function actionEditVoicemailInfoShowForm()
     {
         $keyName = 'voicemailId';
@@ -78,7 +155,7 @@ class VoiceController extends Controller
                 $voicemailInfo = new VoicemailInfo();
                 $voicemailInfo->voicemailId = $voicemail->id;
             }
-            
+
             $this->render('editVoicemailInfoShowForm', $data = array(
                 'voicemail' => $voicemail,
                 'model' => $voicemailInfo,
@@ -92,7 +169,7 @@ class VoiceController extends Controller
         $voicemailInfo = null;
         $saveSuccess = FALSE;
 
-        
+
         $keyName = 'voicemailId';
         $paramVoicemailId = array_key_exists($keyName, $_GET) ?
                 $_GET[$keyName] : null;
@@ -112,7 +189,7 @@ class VoiceController extends Controller
                 $voicemailInfo->attributes = $_POST['VoicemailInfo'];
                 $voicemailInfo->voicemailId = $voicemail->id;
             }
-            
+
             if (isset($_POST['VoicemailInfo']))
             {
                 $POST_voicemailInfo = $_POST['VoicemailInfo'];
@@ -128,7 +205,7 @@ class VoiceController extends Controller
                 }
             }
         }
-        
+
         $this->render('editVoicemailInfoPostForm', $data = array(
             'voicemailInfo' => $voicemailInfo,
             'saveSuccess' => $saveSuccess,

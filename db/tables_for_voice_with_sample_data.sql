@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 24, 2013 at 05:30 PM
+-- Generation Time: Aug 25, 2013 at 06:06 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -33,26 +33,27 @@ CREATE TABLE IF NOT EXISTS `category` (
   `description` text NOT NULL COMMENT 'Brief description about this type of violence.',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Category of violence.' AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Category of violence.' AUTO_INCREMENT=100000 ;
 
 --
 -- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `parent`, `title`, `description`) VALUES
-(1, 0, 'Domestic violence\r\n', 'Domestic violence\r\n'),
-(2, 0, 'Social violence\r\n', 'Social violence\r\n'),
-(3, 0, 'Rape\r\n', 'Rape\r\n'),
-(4, 0, 'Attempt to Rape\r\n', 'Attempt to Rape\r\n'),
-(5, 0, 'Murder\r\n', 'Murder\r\n'),
-(6, 0, 'Attempt to Murder\r\n', 'Attempt to Murder\r\n'),
-(7, 0, 'Trafficking\r\n', 'Trafficking\r\n'),
-(8, 0, 'Sexual Abuse\r\n', 'Sexual Abuse\r\n'),
-(9, 0, 'Other\r\n', 'Other\r\n'),
-(10, 1, 'Polygamy\r\n', 'Polygamy\r\n'),
-(11, 1, 'Physical Abuse\r\n', 'Physical Abuse\r\n'),
-(12, 1, 'Marital Rape\r\n', 'Marital Rape\r\n'),
-(13, 1, 'Threats\r\n', 'Threats\r\n');
+(10, 1, 'Other', 'Other'),
+(11, 1, 'Domestic violence', 'Domestic violence'),
+(12, 1, 'Social violence', 'Social violence'),
+(13, 1, 'Rape', 'Rape'),
+(14, 1, 'Attempt to Rape', 'Attempt to Rape'),
+(15, 1, 'Murder', 'Murder'),
+(16, 1, 'Attempt to Murder', 'Attempt to Murder'),
+(17, 1, 'Trafficking', 'Trafficking'),
+(18, 1, 'Sexual Abuse', 'Sexual Abuse'),
+(1101, 11, 'Polygamy', 'Polygamy'),
+(1102, 11, 'Physical Abuse', 'Physical Abuse'),
+(1103, 11, 'Marital Rape', 'Marital Rape'),
+(1104, 11, 'Threats', 'Threats'),
+(1, 0, 'RootCategory', 'Root category. For system use only.');
 
 -- --------------------------------------------------------
 
@@ -158,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `voicemailcategory` (
 --
 
 INSERT INTO `voicemailcategory` (`id`, `voicemailId`, `categoryId`) VALUES
-(1, 5, 11);
+(1, 5, 1102);
 
 -- --------------------------------------------------------
 

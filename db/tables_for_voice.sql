@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 24, 2013 at 05:30 PM
+-- Generation Time: Aug 25, 2013 at 06:06 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `description` text NOT NULL COMMENT 'Brief description about this type of violence.',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Category of violence.' AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Category of violence.' AUTO_INCREMENT=100000 ;
 
 -- --------------------------------------------------------
 
