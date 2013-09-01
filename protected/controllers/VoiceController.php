@@ -1,4 +1,5 @@
 <?php
+
 class VoiceController extends Controller
 {
     private $user;
@@ -6,7 +7,8 @@ class VoiceController extends Controller
     public function __construct($id, $module = null)
     {
         parent::__construct($id, $module);
-        $this->user = Users::model()->findByPk(Yii::app()->user->id);
+        //$this->user = Users::model()->findByPk(Yii::app()->user->id);
+        $this->user = Yii::app()->user;
     }
 
     public function filters()
@@ -36,6 +38,10 @@ class VoiceController extends Controller
                 //'users'=>array('admin','voice'),
                 'roles' => array('admin', 'voice')
             ),
+            array('allow', // allow asterisk user to add voicemail
+                'actions' => array('asteriskAddVoicemail'),
+                'roles' => array('asterisk'),
+            ),
             array('deny',
                 'roles' => array('sms', 'org', 'news', 'katha')
             ),
@@ -43,6 +49,44 @@ class VoiceController extends Controller
                 'users' => array('*'),
             ),
         );
+    }
+
+    public function actionAsteriskAddVoicemail()
+    {
+        $saveSuccess = FALSE;
+        $msg = "Unknown error!";
+
+        $voicemail = new Voicemail();
+
+//        if (isset($_POST['Voicemail']))
+//        {
+//            $POST_voicemail = $_POST['Voicemail'];
+//            $POST_voicemail_AR = new Voicemail();
+//            $POST_voicemail_AR->attributes = $POST_voicemail;
+//
+//            $voicemail->callTime = $POST_voicemail_AR->callTime;
+//            $voicemail->callerId = $POST_voicemail_AR->callerId;
+//            $voicemail->vmFileName = $POST_voicemail_AR->vmFileName;
+//
+//            if ($voicemail->validate())
+//            {
+//                $saveSuccess = $voicemail->save();
+//            }
+//        }
+
+        $voicemail->callTime = (isset($_POST['callTime'])) ? $_POST['callTime'] : '';
+        $voicemail->callerId = (isset($_POST['callerId'])) ? $_POST['callerId'] : '';
+        $voicemail->vmFileName = (isset($_POST['vmFileName'])) ? $_POST['vmFileName'] : '';
+
+        if ($voicemail->validate())
+        {
+            $saveSuccess = $voicemail->save();
+            $msg = "Voicemail saved in db.";
+        }
+        else
+            $msg = "Validation failed!";
+
+        echo '{ "status": ' . (($saveSuccess) ? '1' : '0') . ', "msg": "' . $msg . '" }';
     }
 
     public function actionIndex()
@@ -116,7 +160,7 @@ class VoiceController extends Controller
         $voicemailId = $_GET['voicemailId'];
         $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
         $checkedIds = array();
-        
+
         $voicemailCategories = new VoicemailCategoriesBool($voicemail);
         $saveSuccess = FALSE;
         if (isset($_POST['VoicemailCategoriesBool']))
@@ -126,7 +170,7 @@ class VoiceController extends Controller
         }
 
         $assignedCategories = Category::model()->findAllByAttributes(array('id' => $checkedIds));
-        
+
         $this->render('editVoicemailCategoriesPostForm', $data = array(
             'voicemailCategories' => $voicemailCategories,
             'saveSuccess' => $saveSuccess,

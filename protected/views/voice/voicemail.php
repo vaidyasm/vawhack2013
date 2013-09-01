@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 );
 echo "<pre>Selected Voicemail:</pre>";
 echo "<pre>Voicemail: {id: " . $voicemail->id . 
-        ", callTime: " . $voicemail->callTime . 
+        ", callTime: " . date("Y-m-d h:m:s A", $timestamp = $voicemail->callTime) . 
         ", callerId: " . $voicemail->callerId . 
         ", vmFileName: " . $voicemail->vmFileName . 
      "}</pre>";

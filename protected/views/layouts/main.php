@@ -53,6 +53,13 @@
 							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/users/logout'))
 						),
 					)); 
+				} else if (Yii::app()->user->roles == 'asterisk') {
+					$this->widget('zii.widgets.CMenu',array(
+						'items'=>array(
+//							array('label'=>'Asterisk', 'url'=>array('/')),
+							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/users/logout'))
+						),
+					)); 
 				} else if (Yii::app()->user->roles == 'sms') {
 					$this->widget('zii.widgets.CMenu',array(
 						'items'=>array(

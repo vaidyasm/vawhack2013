@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 25, 2013 at 06:06 PM
+-- Generation Time: Sep 01, 2013 at 07:32 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `followup` (
   `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Follow up notes.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `followup`
@@ -80,7 +80,8 @@ INSERT INTO `followup` (`id`, `voicemailId`, `userId`, `editTimestamp`, `text`) 
 (3, 5, 1, '2013-08-24 10:22:19', 'follow up notes 3'),
 (4, 5, 1, '2013-08-24 10:28:25', 'follow up notes 4'),
 (5, 3, 1, '2013-08-24 15:11:12', 'follow up 1'),
-(6, 2, 1, '2013-08-24 15:26:12', 'followup by admin');
+(6, 2, 1, '2013-08-24 15:26:12', 'followup by admin'),
+(7, 8, 2, '2013-08-26 12:25:42', 'aba yopolice ma khabar garne');
 
 -- --------------------------------------------------------
 
@@ -97,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `transcription` (
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`userId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `transcription`
@@ -111,7 +112,37 @@ INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `editTimestamp`, `la
 (6, 5, 2, '2013-08-24 12:30:17', 'English', 'Test transcription text 3'),
 (7, 7, 1, '2013-08-24 13:24:55', 'English', 'test text 2'),
 (8, 3, 1, '2013-08-24 15:10:55', 'English', 'test 2'),
-(9, 2, 1, '2013-08-24 15:25:45', 'Nepali', 'record message');
+(9, 2, 1, '2013-08-24 15:25:45', 'Nepali', 'record message'),
+(10, 8, 2, '2013-08-26 12:25:18', 'nepali', 'yonepalima ho');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(100) NOT NULL,
+  `lastName` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `password`, `role`) VALUES
+(1, 'Admin', 'Admin', 'admin@vawhack.com', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
+(2, 'Voice', 'Voice', 'voice@vawhack.com', 'b95677216e439d96ec4fba1240a3c1f8', 'voice'),
+(3, 'SMS', 'sms', 'sms@vawhack.com', '18b43c6a536a8fe1362f7a3887936be6', 'sms'),
+(4, 'Org', 'Org', 'org@vawhack.com', '5a445d710ae24cd276062b0c84850838', 'org'),
+(5, 'news', 'news', 'news@vawhack.com', '508c75c8507a2ae5223dfd2faeb98122', 'news'),
+(6, 'katha', 'katha', 'katha@vawhack.com', 'c94ed04e8d2104bce9a68bb1a0572bd7', 'katha'),
+(7, 'Asterisk', 'System', 'asterisk@vawhack.com', '51e63a3da6425a39aecc045ec45f1ae8', 'asterisk');
 
 -- --------------------------------------------------------
 
@@ -121,24 +152,25 @@ INSERT INTO `transcription` (`id`, `voicemailId`, `userId`, `editTimestamp`, `la
 
 CREATE TABLE IF NOT EXISTS `voicemail` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key.',
-  `callTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Voicemail received at this timestamp.',
+  `callTime` int(11) NOT NULL COMMENT 'Voicemail received at this timestamp.',
   `callerId` varchar(64) DEFAULT NULL COMMENT 'Phone number of the caller.',
   `vmFileName` text NOT NULL COMMENT 'File name on voice-mail file server.',
   PRIMARY KEY (`id`),
   KEY `callTime` (`callTime`,`callerId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Model ''Voicemail'' is persisted on this table.' AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Model ''Voicemail'' is persisted on this table.' AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `voicemail`
 --
 
 INSERT INTO `voicemail` (`id`, `callTime`, `callerId`, `vmFileName`) VALUES
-(2, '2013-07-13 10:48:51', '14461817', 'vm_1373712531-0000000d.wav'),
-(3, '2013-07-15 06:18:35', '9841793522', 'vm_1373869115-0000000e.wav'),
-(4, '2013-07-10 01:14:06', '014334836', 'vm_1373418846-0000000c.wav'),
-(5, '2013-07-06 12:37:23', 'Unknown', 'vm_1373114243-00000000.wav'),
-(6, '2013-07-08 07:08:05', '1111111111', 'vm_1373267285-00000004.wav'),
-(7, '2013-07-08 12:52:49', '015009727', 'vm_1373287969-0000000b.wav');
+(2, 1373712531, '14461817', 'vm_1373712531-0000000d.wav'),
+(3, 1373869115, '9841793522', 'vm_1373869115-0000000e.wav'),
+(4, 1373418846, '014334836', 'vm_1373418846-0000000c.wav'),
+(5, 1373114243, 'Unknown', 'vm_1373114243-00000000.wav'),
+(6, 1373267285, '1111111111', 'vm_1373267285-00000004.wav'),
+(7, 1373287969, '015009727', 'vm_1373287969-0000000b.wav'),
+(8, 1373287969, '015009999', 'vm_1373287969-0000000b.wav');
 
 -- --------------------------------------------------------
 
@@ -175,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `voicemailinfo` (
   `lastFollowUp` timestamp NULL DEFAULT NULL COMMENT 'Timestamp of last followup.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`lastFollowUp`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `voicemailinfo`
@@ -183,7 +215,8 @@ CREATE TABLE IF NOT EXISTS `voicemailinfo` (
 
 INSERT INTO `voicemailinfo` (`id`, `voicemailId`, `callerName`, `callerDistrict`, `lastFollowUp`) VALUES
 (1, 3, 'Bibhusan Bista', 'Lalitpur', NULL),
-(2, 7, 'Anjesh Tuladhar', 'Lalitpur', NULL);
+(2, 7, 'Anjesh Tuladhar', 'Lalitpur', NULL),
+(3, 8, 'Ravi Kumar', 'Lalitpur', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

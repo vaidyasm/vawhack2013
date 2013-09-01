@@ -47,6 +47,7 @@
 		<?php echo $form->labelEx($model,'role'); ?>
 		<?php $roles = array('admin'=>'admin' ,
 							'voice' => 'voice', 
+                                                        'asterisk' => 'asterisk', 
 							'sms'=> 'sms', 
 							'org'=> 'org', 
 							'news'=> 'news',

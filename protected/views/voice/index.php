@@ -1,5 +1,5 @@
 <?php
-/* @var $this UsersController */
+/* @var $this VoiceController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs = array(
@@ -11,7 +11,9 @@ $this->breadcrumbs = array(
     foreach ($voicemails as $voicemail)
     {
         ?><tr><td><?php
-                echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/voicemail/' . $voicemail->id . '">' . $voicemail->callTime . ', ' . $voicemail->callerId . "</a>";
+                echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/voice/voicemail/' . $voicemail->id . '">' . 
+                                date("Y-m-d h:m:s A", $timestamp = $voicemail->callTime) . ', ' . 
+                        $voicemail->callerId . "</a>";
                 ?></td></tr><?php
     }
     ?>

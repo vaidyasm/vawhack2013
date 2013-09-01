@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 25, 2013 at 06:06 PM
+-- Generation Time: Sep 01, 2013 at 07:33 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `followup` (
   `editTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created or edited timestamp.',
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Follow up notes.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Follow up notes of a voicemail.' AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -65,7 +65,23 @@ CREATE TABLE IF NOT EXISTS `transcription` (
   `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Transcription text.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`userId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Transcription of a voicemail.' AUTO_INCREMENT=11 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(100) NOT NULL,
+  `lastName` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -75,12 +91,12 @@ CREATE TABLE IF NOT EXISTS `transcription` (
 
 CREATE TABLE IF NOT EXISTS `voicemail` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key.',
-  `callTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Voicemail received at this timestamp.',
+  `callTime` int(11) NOT NULL COMMENT 'Voicemail received at this timestamp.',
   `callerId` varchar(64) DEFAULT NULL COMMENT 'Phone number of the caller.',
   `vmFileName` text NOT NULL COMMENT 'File name on voice-mail file server.',
   PRIMARY KEY (`id`),
   KEY `callTime` (`callTime`,`callerId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Model ''Voicemail'' is persisted on this table.' AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Model ''Voicemail'' is persisted on this table.' AUTO_INCREMENT=29 ;
 
 -- --------------------------------------------------------
 
@@ -110,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `voicemailinfo` (
   `lastFollowUp` timestamp NULL DEFAULT NULL COMMENT 'Timestamp of last followup.',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`lastFollowUp`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Additional info about a voicemail.' AUTO_INCREMENT=4 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

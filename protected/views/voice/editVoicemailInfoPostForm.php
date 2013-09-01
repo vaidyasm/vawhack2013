@@ -1,5 +1,5 @@
 <?php
-/* @var $this UsersController */
+/* @var $this VoiceController */
 /* @var $dataProvider CActiveDataProvider */
 /* @var $voicemailInfo VoicemailInfo */
 

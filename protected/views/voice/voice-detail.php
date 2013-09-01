@@ -56,11 +56,11 @@ $voicemailInfo = (isset($voicemailInfo)) ? $voicemailInfo : new VoicemailInfo();
                         <div class="voice-section">
                             <div class="voice-top-section">
                                 <h2>Voice <?=$voicemail->id?></h2>
-                                <span class="voice-icons">icons</span>
+<!--                                <span class="voice-icons">icons</span>-->
                             </div>
                             <div class="voice-left-section">
                                 <ul>
-                                    <li><span class="title">Recorded on</span><?= $voicemail->callTime ?></li>
+                                    <li><span class="title">Recorded on</span><?= date("Y-m-d h:m:s A", $timestamp = $voicemail->callTime) ?></li>
                                     <li><span class="title">Phone no.</span><?= $voicemail->callerId ?></li>
                                     <li><span class="title">District <?=' <a href="' . Yii::app()->createUrl('//voice/editVoicemailInfoShowForm', array('voicemailId'=>$voicemail->id)) . '">Edit</a></pre>'?></span><?=$voicemailInfo->callerDistrict?></li>
                                     <li><span class="title">Category <?=' <a href="' . Yii::app()->createUrl('//voice/editVoicemailCategoriesShowForm', array('voicemailId' => $voicemail->id)) . '">Edit</a></pre>'?></span><?php
@@ -77,6 +77,7 @@ $voicemailInfo = (isset($voicemailInfo)) ? $voicemailInfo : new VoicemailInfo();
                                 </ul>
                             </div>
                             <div class="voice-right-section">
+                                <audio src="http://voice.vawhack.org/getVmFileById.php?vmFileName=<?php echo $voicemail->vmFileName; ?>" controls="" type="audio/wav"></audio>
                                 <div class="transcription-block">
                                     <h3>Transcription</h3>
                                     <?php
