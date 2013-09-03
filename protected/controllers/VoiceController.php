@@ -163,13 +163,13 @@ class VoiceController extends Controller
 
         $voicemailCategories = new VoicemailCategoriesBool($voicemail);
         $saveSuccess = FALSE;
-        if (isset($_POST['VoicemailCategoriesBool']))
+        $selectedCategoryIds = array();
+        if (isset($_POST['Voicemail']))
         {
-            $voicemailCategoriesPOST = $_POST['VoicemailCategoriesBool'];
-            $checkedIds = $voicemailCategoriesPOST['boolArray'];
+            $selectedCategoryIds = $_POST['Voicemail']['selectedCategoryIds'];
         }
 
-        $assignedCategories = Category::model()->findAllByAttributes(array('id' => $checkedIds));
+        $assignedCategories = Category::model()->findAllByAttributes(array('id' => $selectedCategoryIds));
 
         $this->render('editVoicemailCategoriesPostForm', $data = array(
             'voicemailCategories' => $voicemailCategories,

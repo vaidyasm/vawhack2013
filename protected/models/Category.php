@@ -11,9 +11,44 @@
  */
 class Category extends CActiveRecord
 {
+
     public static function getRootCategory()
     {
         return Category::model()->with('childCategories')->findByPk(1);
+    }
+
+    public static function getAllCategories()
+    {
+        $rval = array();
+        self::categoriesAsArray(self::getRootCategory(), $rval);
+        return $rval;
+    }
+
+    public static function categoriesAsArray($rootCategory, &$rval)
+    {
+        $childCategories = $rootCategory->childCategories;
+        foreach ($childCategories as $childCategory)
+        {
+            $rval[$childCategory->id] = $childCategory->title;
+            self::categoriesAsArray($childCategory, $rval);
+        }
+    }
+
+    static function selectedCategoriesAsArray($rootCategory, $selectedCategories, &$rval)
+    {
+        $childCategories = $rootCategory->childCategories;
+        foreach ($childCategories as $childCategory)
+        {
+            foreach ($selectedCategories as $selectedCategory)
+            {
+                if ($childCategory->id == $selectedCategory->id)
+                {
+                    $rval[$childCategory->id] = $childCategory->title;
+                    break;
+                }
+            }
+            self::selectedCategoriesAsArray($childCategory, $selectedCategories, $rval);
+        }
     }
 
     /**

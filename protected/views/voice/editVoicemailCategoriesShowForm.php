@@ -17,7 +17,7 @@ $this->breadcrumbs = array(
 ?>
 <div class="form">
     <?php
-    $model = $voicemail->categoriesBoolean;
+
     $data = array();
     VoicemailCategoriesBool::categoriesAsData($rootCategory, $data);
 //            var_dump($model);
@@ -35,11 +35,14 @@ $this->breadcrumbs = array(
     ));
     ?>
     <p class="note">Fields with <span class="required">*</span> are required.</p>
-    <?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($voicemail); ?>
     <div class="row">
-        <?php echo $form->labelEx($model, 'boolArray'); ?>
-        <?php echo $form->checkBoxList($model, 'boolArray', $data); ?>
-        <?php echo $form->error($model, 'boolArray'); ?>
+        <?php echo $form->labelEx($voicemail, 'selectedCategoryIds'); ?>
+        <?php
+        $allCategories = Category::getAllCategories();
+        echo $form->checkBoxList($voicemail, 'selectedCategoryIds', $allCategories);
+        ?>
+        <?php echo $form->error($voicemail, 'selectedCategoryIds'); ?>
     </div>
     <div class="row buttons">
         <?php echo CHtml::submitButton('Save'); ?>

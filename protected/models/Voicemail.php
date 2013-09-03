@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the model class for table "voicemail".
  *
@@ -12,7 +13,7 @@
  * @property Followup[] $followups
  * @property Transcription[] $transcriptions
  * @property Category[] $categories
- * @property VoicemailCategories $categoriesBoolean
+ * @property VoicemailCategoriesBool $categoriesBoolean
  * @property VoicemailInfo $voicemailInfo
  */
 class Voicemail extends CActiveRecord
@@ -24,6 +25,17 @@ class Voicemail extends CActiveRecord
         return $categoriesBool;
     }
 
+    function getSelectedCategoryIds()
+    {
+        $rval = array();
+        
+        foreach($this->categories as $category)
+        {
+            array_push($rval, $category ->id);
+        }
+        return $rval;
+    }
+    
     /**
      * @return string the associated database table name
      */
@@ -73,6 +85,7 @@ class Voicemail extends CActiveRecord
             'callTime' => 'Voicemail received at this timestamp.',
             'callerId' => 'Phone number of the caller.',
             'vmFileName' => 'File name on voice-mail file server.',
+            'selectedCategoryIds' => 'Assigned Categories',
         );
     }
 
