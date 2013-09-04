@@ -13,18 +13,10 @@
  * @property Followup[] $followups
  * @property Transcription[] $transcriptions
  * @property Category[] $categories
- * @property VoicemailCategoriesBool $categoriesBoolean
  * @property VoicemailInfo $voicemailInfo
  */
 class Voicemail extends CActiveRecord
 {
-
-    public function getCategoriesBoolean()
-    {
-        $categoriesBool = new VoicemailCategoriesBool($this);
-        return $categoriesBool;
-    }
-
     function getSelectedCategoryIds()
     {
         $rval = array();

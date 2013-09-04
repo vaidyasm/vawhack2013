@@ -1,14 +1,23 @@
 <?php
 /* @var $this VoiceController */
 /* @var $dataProvider CActiveDataProvider */
-/* @var $voicemailInfo VoicemailInfo */
 
 $this->breadcrumbs = array(
-    'Voice', 'Voicemail', 'VoicemailInfo', 'Update'
+    'Voice', 'Voicemail', 'Update Voicemail Categories'
 );
 ?>
 <?php
-echo ($saveSuccess == TRUE) ? 'VoicemailInfo was updated. ' : 'VoicemailInfo is yet to be updated! Please have patience.';
+echo 
+    '<a href="' . 
+        Yii::app()->createUrl('//voice/voicemail', 
+                array('id' => $voicemailId)) . 
+        '">Voicemail</a>\'s associated categories ' . 
+                (($updateSuccess == TRUE) 
+                ? 'have been updated. ' 
+                : ('could not be updated. Please contact website admin.' . 
+                    'Save New: ' . (($saveSuccess) ? "OK" : "Failed") . 
+                    'Delete Old: ' . (($deleteSuccess) ? "OK" : "Failed")
+                    ));
 
 function categoriesAsHTMLListTree($rootCategory, $assignedCategories)
 {
@@ -36,16 +45,5 @@ function categoriesAsHTMLListTree($rootCategory, $assignedCategories)
     return $rval;
 }
 
-//$voicemailCategories = (isset($voicemail->categories) && !is_null($voicemail->categories)) ? $voicemail->categories : array();
-$categoriesAsHTMLListTree = categoriesAsHTMLListTree($rootCategory, $assignedCategories);
+echo categoriesAsHTMLListTree(Category::getRootCategory(), $assignedCategories);
 ?>
-<div id="categoryTree" class="filetree treeview-famfamfam"><?= $categoriesAsHTMLListTree ?></div>
-<script>
-    $(document).ready(function() {
-        $("#categoryTree").treeview({
-            toggle: function() {
-                console.log("%s was toggled.", $(this).find(">span").text());
-            }
-        });
-    });
-</script>

@@ -64,7 +64,7 @@ $voicemailInfo = (isset($voicemailInfo)) ? $voicemailInfo : new VoicemailInfo();
                                     <li><span class="title">Phone no.</span><?= $voicemail->callerId ?></li>
                                     <li><span class="title">District <?=' <a href="' . Yii::app()->createUrl('//voice/editVoicemailInfoShowForm', array('voicemailId'=>$voicemail->id)) . '">Edit</a></pre>'?></span><?=$voicemailInfo->callerDistrict?></li>
                                     <li><span class="title">Category <?=' <a href="' . Yii::app()->createUrl('//voice/editVoicemailCategoriesShowForm', array('voicemailId' => $voicemail->id)) . '">Edit</a></pre>'?></span><?php
-                                        if (isset($voicemail->categories) && count($voicemail->categories) > 0)
+                                        if (is_array($voicemail->categories) && count($voicemail->categories) > 0)
                                         {
                                             echo '<ul>';
                                             foreach ($voicemail->categories as $category)

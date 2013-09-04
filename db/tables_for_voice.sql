@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 01, 2013 at 07:33 AM
+-- Generation Time: Sep 04, 2013 at 04:13 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `voicemailcategory` (
   `categoryId` int(11) NOT NULL COMMENT 'CONSTRAINT FOREIGN KEY (categoryId) REFERENCES Category(id)',
   PRIMARY KEY (`id`),
   KEY `voicemailId` (`voicemailId`,`categoryId`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Associates a Voicemail to its category.' AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Associates a Voicemail to its category.' AUTO_INCREMENT=77 ;
 
 -- --------------------------------------------------------
 

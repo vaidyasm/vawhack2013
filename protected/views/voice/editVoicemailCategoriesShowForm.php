@@ -17,12 +17,6 @@ $this->breadcrumbs = array(
 ?>
 <div class="form">
     <?php
-
-    $data = array();
-    VoicemailCategoriesBool::categoriesAsData($rootCategory, $data);
-//            var_dump($model);
-//            var_dump($data);
-
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'voicemailInfo-editVoicemailInfoShowForm-form',
         // Please note: When you enable ajax validation, make sure the corresponding

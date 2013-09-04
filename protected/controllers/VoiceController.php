@@ -7,7 +7,6 @@ class VoiceController extends Controller
     public function __construct($id, $module = null)
     {
         parent::__construct($id, $module);
-        //$this->user = Users::model()->findByPk(Yii::app()->user->id);
         $this->user = Yii::app()->user;
     }
 
@@ -35,7 +34,6 @@ class VoiceController extends Controller
                     'addFollowupShowForm', 'addFollowupPostForm',
                     'editVoicemailInfoShowForm', 'editVoicemailInfoPostForm',
                     'editVoicemailCategoriesShowForm', 'editVoicemailCategoriesPostForm'),
-                //'users'=>array('admin','voice'),
                 'roles' => array('admin', 'voice')
             ),
             array('allow', // allow asterisk user to add voicemail
@@ -58,22 +56,6 @@ class VoiceController extends Controller
 
         $voicemail = new Voicemail();
 
-//        if (isset($_POST['Voicemail']))
-//        {
-//            $POST_voicemail = $_POST['Voicemail'];
-//            $POST_voicemail_AR = new Voicemail();
-//            $POST_voicemail_AR->attributes = $POST_voicemail;
-//
-//            $voicemail->callTime = $POST_voicemail_AR->callTime;
-//            $voicemail->callerId = $POST_voicemail_AR->callerId;
-//            $voicemail->vmFileName = $POST_voicemail_AR->vmFileName;
-//
-//            if ($voicemail->validate())
-//            {
-//                $saveSuccess = $voicemail->save();
-//            }
-//        }
-
         $voicemail->callTime = (isset($_POST['callTime'])) ? $_POST['callTime'] : '';
         $voicemail->callerId = (isset($_POST['callerId'])) ? $_POST['callerId'] : '';
         $voicemail->vmFileName = (isset($_POST['vmFileName'])) ? $_POST['vmFileName'] : '';
@@ -91,8 +73,6 @@ class VoiceController extends Controller
 
     public function actionIndex()
     {
-//		$this->render('index');
-
         $voicemails = Voicemail::model()->findAll();
         $this->render('index', $data = array('voicemails' => $voicemails));
     }
@@ -100,15 +80,12 @@ class VoiceController extends Controller
     public function actionVoicemail()
     {
         $id = $_GET['id'];
-        //$voicemail = Voicemail::model()->with('transcription')->findByPk((int)$id);
         $voicemail = Voicemail::model()->with('voicemailInfo')->findByPk((int) $id);
-//        $this->render('voicemail', $data = array('voicemail' => $voicemail));
         $this->renderPartial('voice-detail', $data = array('voicemail' => $voicemail));
     }
 
     public function actionGetCategories()
     {
-        $categories = Category::model()->findAll();
         $this->renderPartial('categoresXMLView', $data = array('xmlData' => $this->getCategoriesAsXMLData()));
     }
 
@@ -161,21 +138,46 @@ class VoiceController extends Controller
         $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
         $checkedIds = array();
 
-        $voicemailCategories = new VoicemailCategoriesBool($voicemail);
         $saveSuccess = FALSE;
+        $deleteSuccess = TRUE;
+        $updateSuccess = FALSE;
         $selectedCategoryIds = array();
+
+        $voicemailCategories = VoicemailCategories::model()->findAllByAttributes(array('voicemailId' => $voicemail->id));
+        if (is_array($voicemailCategories) && count($voicemailCategories) > 0)
+        {
+            foreach ($voicemailCategories as $voicemailCategory)
+            {
+                $deleteSuccess &= $voicemailCategory->delete();
+            }
+        }
+
         if (isset($_POST['Voicemail']))
         {
             $selectedCategoryIds = $_POST['Voicemail']['selectedCategoryIds'];
+            $saveSuccess = TRUE;
+            if (is_array($selectedCategoryIds) && count($selectedCategoryIds) > 0)
+            {
+                foreach ($selectedCategoryIds as $selectedCategoryId)
+                {
+                    $voicemailCategory = new VoicemailCategories();
+                    $voicemailCategory->voicemailId = $voicemail->id;
+                    $voicemailCategory->categoryId = $selectedCategoryId;
+                    $saveSuccess &= ($voicemailCategory->validate() & $voicemailCategory->save());
+                }
+            }
+            $updateSuccess = ($saveSuccess & $deleteSuccess);
         }
 
         $assignedCategories = Category::model()->findAllByAttributes(array('id' => $selectedCategoryIds));
 
         $this->render('editVoicemailCategoriesPostForm', $data = array(
-            'voicemailCategories' => $voicemailCategories,
+            'updateSuccess' => $updateSuccess,
             'saveSuccess' => $saveSuccess,
+            'deleteSuccess' => $deleteSuccess,
+            'voicemailId' => $voicemail->id,
+            'voicemailCategories' => $voicemailCategories,
             'checkedIds' => $checkedIds,
-            'rootCategory' => Category::getRootCategory(),
             'assignedCategories' => $assignedCategories,
         ));
     }
@@ -213,7 +215,6 @@ class VoiceController extends Controller
         $voicemail = null;
         $voicemailInfo = null;
         $saveSuccess = FALSE;
-
 
         $keyName = 'voicemailId';
         $paramVoicemailId = array_key_exists($keyName, $_GET) ?
@@ -268,7 +269,6 @@ class VoiceController extends Controller
     {
         $voicemailId = $_GET['voicemailId'];
         $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
-//        $this->render('addTranscriptionShowForm', $data = array('voicemail' => $voicemail));
         $transcription = Transcription::model();
         $transcription->voicemailId = $voicemail->id;
         $transcription->userId = $this->user->id;
@@ -279,9 +279,6 @@ class VoiceController extends Controller
 
     public function actionAddTranscriptionPostForm()
     {
-//        $voicemailId = $_GET['voicemailId'];
-//        $voicemail = Voicemail::model()->findByPk((int) $voicemailId);
-
         $transcription = new Transcription();
         $saveSuccess = FALSE;
         if (isset($_POST['Transcription']))
@@ -329,5 +326,4 @@ class VoiceController extends Controller
             'saveSuccess' => $saveSuccess,
         ));
     }
-
 }
